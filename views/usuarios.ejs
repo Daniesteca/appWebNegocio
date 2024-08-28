@@ -1,0 +1,60 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>USUARIOS</title>
+    </head>
+    <body>
+
+        <div class="content">
+            <div class ="container">
+                <h1 class="text-center"> Administracion de Usuarios </h1>
+                <!--boton de crear -->
+                <a href="/usuariosCreate" class="btn btn-outline-barb-color2 mt-4"><i class='bx bxs-plus-circle bx-md'></i></a>
+                <!--tabla -->
+                <table class="table table-bordered table-striped text-center mt-4">
+                    <thead class="table-dark"> <!--color encabezado de la  tabla -->
+                        <tr >
+                            <th scope="col">id</th>
+                            <th scope="col">nombre</th>
+                            <th scope="col">email</th>
+                            <th scope="col">usuario</th>
+                            <th scope="col">password</th>
+                            <th scope="col">Rol</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+        
+                    <tbody>
+                        <% results.forEach((usuarios)=>{ %>
+                        <tr>
+                            <td><%= usuarios.id %></td>
+                            <td><%= usuarios.nombre %></td>
+                            <td><%= usuarios.email %></td>
+                            <td><%= usuarios.usuario %></td>
+                            <td><%= usuarios.password %></td>
+                            <td><%= usuarios.rol %></td>
+                            
+                            
+                            <td>
+                                <a href="/usuariosEdit/<%= usuarios.id %>" class="btn btn-outline-barb-color2 ">editar</a>
+                                <a href="/deleteUsuario/<%= usuarios.id %>" class="btn btn-outline-danger">borrar</a>
+        
+                            </td>
+                        </tr>
+                    <% }) %>
+        
+                    </tbody>
+                </table>
+        
+              </div>
+    
+        </div>
+     
+        
+    </body>
+    </html>
+    
+    
+    

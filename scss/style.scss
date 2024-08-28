@@ -1,0 +1,36 @@
+/* paleta de colores primario */
+
+
+$white:    #fff !default;
+$gray-50: #fbfaf1 ;
+$gray-100: #f5f2df;
+$gray-200: #eae1be;
+$gray-300: #dccb95;
+$gray-400: #cfb371e8;
+$gray-500: #c29a4d;
+$gray-600: #b48642;
+$gray-700: #966b38;
+$gray-800: #795633;
+$gray-900: #62482c;
+$black:    #342416;
+
+/*$body-bg:$gray-100;*/
+
+/*primero añadimos las funciones de bootstrap para agregar nuevos colores*/
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+
+/*crear nuestro mapa de colores con los colores nuevos que queremos agregar*/
+$custom-colors:(
+    "barb-color1":rgba(213, 186, 110, 0.858),
+    "barb-color2": #cfb371e9,
+    "barb-color3": #ad8249,
+    "barb-color4":#d7c79a,
+    "barb-color5": #faf8f2
+);
+
+//Merge the maps-- al mapa original dentro de bootstrap le estamos agregando nuestro nuevo mapa 
+$theme-colors:map-merge($theme-colors, $custom-colors);
+
+@import "../node_modules/bootstrap/scss/bootstrap";

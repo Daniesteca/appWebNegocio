@@ -1,0 +1,121 @@
+<div class="container mt-4" >
+    <div class="card border-secondary">
+        <div class="card-header bg-dark text-light">Nuevo Registro</div>
+        <div class="card-body">
+            <form action="/saveNewCita" method="POST">
+                <div class="mb-3">
+                    
+                    <label for="user" class="form-label">Fecha</label>
+                    <label for="usuario" class="form-label"></label>
+                    <input type="date" class="form-control" id="fecha" name="fecha" tabindex="1">
+                </div>
+
+                <div class="mb-3">
+                  <label for="hora" class="form-label">Hora</label>
+                  <select id="hora" name="hora" class="form-select" tabindex="2">
+                      <optgroup label="Mañana">
+                          <option value="10:00">10:00 am</option>
+                          <option value="10:30">10:30 am</option>
+                          <option value="11:00">11:00 am</option>
+                          <option value="11:30">11:30 am</option>
+                          <option value="12:00">12:00 pm</option>
+                      </optgroup>
+                      <optgroup label="Tarde">
+                          <option value="14:00">2:00 pm</option>
+                          <option value="14:30">2:30 pm</option>
+                          <option value="15:00">3:00 pm</option>
+                          <option value="15:30">3:30 pm</option>
+                          <option value="16:00">4:00 pm</option>
+                          <option value="16:30">4:30 pm</option>
+                          <option value="17:00">5:00 pm</option>
+                          <option value="17:30">5:30 pm</option>
+                          <option value="18:00">6:00 pm</option>
+                      </optgroup>
+                  </select>
+              </div>
+
+                <div class="mb-3">
+                  <label for="user" class="form-label">Estado</label>
+                  <select id="estado" name="estado" class="form-select" tabindex="2">
+                      <option value="Activo" selected>Activo</option>
+                  </select>
+              </div>
+
+
+                <div class="mb-3">
+                  <label for="servicio" class="form-label">Servicio</label>
+                  <select id="servicio" name="servicio" class="form-select" tabindex="2">
+                      <option value="Corte de cabello">Corte de cabello</option>
+                      <option value="Arreglo de Barba">Arreglo de Barba</option>
+                      <option value="Corte de cabello y barba">Corte de cabello y barba</option>
+                  </select>
+              </div>
+              
+              <div class="mb-3">
+                  <label for="Valor_Cita" class="form-label">Valor cita</label>
+                  <input type="text" id="Valor_Cita" name="Valor_Cita" class="form-control" readonly>
+              </div>
+
+                  <div class="mb-3">
+                        
+                    <label for="user" class="form-label">Nombre Cliente</label>
+                    <label for="usuario" class="form-label"></label>
+                    <input type="text" class="form-control" id="nombre_cliente" name="nombre_cliente" tabindex="1">
+                </div>
+
+              <div class="mb-3">
+                <label for="user" class="form-label">Barbero</label>
+                <select id="barbero" name="barbero" class="form-select" tabindex="2">
+                    <option value="Alex Rios" selected>Alex Rios</option>
+                    <option value="Cristian Rios">Cristian Rios</option>
+                </select>
+            </div>
+
+                <div class="mb-3">
+                    <label for="user" class="form-label">Sede</label>
+                    <select id="sede" name="sede" class="form-select" tabindex="2">
+                        <option value="La estrella" selected>La estrella</option>
+                        <option value="La Enea">La Enea</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-barb-color2" id="guardarButton" tabindex="5">Guardar</button>
+                <a href="/citas" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+
+    </div>
+ </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+<!-- script para autocompletar el valor de la cita -->
+<script>
+  // Obtener referencia a los elementos select y el campo de valor cita
+  const servicioSelect = document.getElementById('servicio');
+  const valorCitaInput = document.getElementById('Valor_Cita');
+
+  // Función para actualizar el valor cita según el servicio seleccionado
+  servicioSelect.addEventListener('change', function() {
+      // Obtener el valor seleccionado del servicio
+      const servicioSeleccionado = servicioSelect.value;
+      
+      // Actualizar el valor cita según el servicio seleccionado
+      switch(servicioSeleccionado) {
+          case 'Corte de cabello':
+              valorCitaInput.value = '22000';
+              break;
+          case 'Arreglo de Barba':
+              valorCitaInput.value = '15000';
+              break;
+          case 'Corte de cabello y barba':
+              valorCitaInput.value = '32000';
+              break;
+          default:
+              // Limpiar el campo de valor cita si no se selecciona ningún servicio
+              valorCitaInput.value = '';
+              break;
+      }
+  });
+</script>
+  

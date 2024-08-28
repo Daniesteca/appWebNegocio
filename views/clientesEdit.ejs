@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="/style.css" rel="stylesheet" >
+    <!--Usamos boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <title>EDITAR CLIENTES</title>
+</head>
+  <body>
+   
+
+ <% if (user) { %>
+ <div class="container mt-4" >
+    <div class="card border-secondary">
+        <div class="card-header bg-dark text-light">Editar Registro</div>
+        <div class="card-body">
+            <form action="/updateCliente" method="POST">
+                <input id="id" name="id" value="<%=user.id %>" hidden>
+                <div class="mb-3">    
+                    <label for="user" class="form-label">Nombre</label>
+                    <label for="usuario" class="form-label"></label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" value="<%=user.nombre %>" tabindex="1">
+                </div>
+
+                <div class="mb-3">
+                    <label for="user" class="form-label">Email</label>
+                    <label for="usuario" class="form-label"></label>
+                    <input type="text" class="form-control" id="email" name="email" value="<%=user.email %>" tabindex="1">
+                </div>
+
+                <div class="mb-3">
+                    <label for="user" class="form-label">Usuario</label>
+                    <label for="usuario" class="form-label"></label>
+                    <input type="text" class="form-control" id="usuario" name="usuario" value="<%=user.client_usu %>" tabindex="1">
+                </div>
+
+                <div class="mb-3">
+                    <label for="user" class="form-label">Password</label>
+                    <label for="usuario" class="form-label"></label>
+                    <input type="text" class="form-control" id="password" name="password" value="<%=user.client_pasw %>" tabindex="1">
+                </div>
+
+                <button type="submit" class="btn btn-barb-color2" tabindex="5">Guardar</button>
+                <a href="/clientes" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+ </div>
+<% } %>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  
+</body>
+</html>

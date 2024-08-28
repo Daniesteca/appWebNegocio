@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="/style.css" rel="stylesheet" >
+    <!--Usamos boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <title>EDICION CITAS</title>
+</head>
+  <body>
+   
+ <% if (user) { %>
+ <div class="container mt-4" >
+    <div class="card border-secondary">
+        <div class="card-header bg-dark text-light">Editar Registro</div>
+        <div class="card-body">
+            <form action="/updateCita" method="POST">
+                <input id="id" name="id" value="<%=user.id %>" hidden>
+                <div class="mb-3">    
+                    <label for="user" class="form-label">Fecha</label>
+                    <label for="usuario" class="form-label"></label>
+                    <input type="text" class="form-control" id="fecha" name="fecha" value="<%=user.fecha %>" tabindex="1">
+                </div>
+
+                <div class="mb-3">
+                  <label for="hora" class="form-label">Hora</label>
+                  <select id="hora" name="hora" class="form-select" tabindex="2">
+                      <optgroup label="Mañana">
+                          <option value="10:00">10:00 am</option>
+                          <option value="10:30">10:30 am</option>
+                          <option value="11:00">11:00 am</option>
+                          <option value="11:30">11:30 am</option>
+                          <option value="12:00">12:00 pm</option>
+                      </optgroup>
+                      <optgroup label="Tarde">
+                          <option value="14:00">2:00 pm</option>
+                          <option value="14:30">2:30 pm</option>
+                          <option value="15:00">3:00 pm</option>
+                          <option value="15:30">3:30 pm</option>
+                          <option value="16:00">4:00 pm</option>
+                          <option value="16:30">4:30 pm</option>
+                          <option value="17:00">5:00 pm</option>
+                          <option value="17:30">5:30 pm</option>
+                          <option value="18:00">6:00 pm</option>
+                      </optgroup>
+                  </select>
+              </div>
+
+
+              <div class="mb-3">
+                <label for="user" class="form-label">Estado</label>
+                <label for="usuario" class="form-label"></label>
+                <input type="text" class="form-control" id="estado" name="estado" value="<%=user.estado %>" tabindex="1">
+            </div>
+
+            <div class="mb-3">
+              <label for="servicio" class="form-label">Servicio</label>
+              <select id="servicio" name="servicio" class="form-select" tabindex="2">
+                  <option value="Corte de cabello">Corte de cabello</option>
+                  <option value="Arreglo de Barba">Arreglo de Barba</option>
+                  <option value="Corte de cabello y barba">Corte de cabello y barba</option>
+              </select>
+          </div>
+          
+          <div class="mb-3">
+              <label for="Valor_Cita" class="form-label">Valor cita</label>
+              <input type="text" id="Valor_Cita" name="Valor_Cita" class="form-control" readonly>
+          </div>
+
+          <div class="mb-3">
+            <label for="user" class="form-label">Nombre_cliente</label>
+            <label for="usuario" class="form-label"></label>
+            <input type="text" class="form-control" id="nombre_cliente" name="nombre_cliente" value="<%=user.nombre_cliente %>" tabindex="1">
+        </div>
+        <div class="mb-3">
+          <label for="user" class="form-label">Barbero</label>
+          <select id="barbero" name="barbero" class="form-select" tabindex="2">
+              <option value="Alex Rios" selected>Alex Rios</option>
+              <option value="Cristian Rios">Cristian Rios</option>
+          </select>
+      </div>
+
+          <div class="mb-3">
+              <label for="user" class="form-label">Sede</label>
+              <select id="sede" name="sede" class="form-select" tabindex="2">
+                  <option value="La estrella" selected>La estrella</option>
+                  <option value="La Enea">La Enea</option>
+              </select>
+          </div>
+
+
+<!--                 <div class="mb-3">
+                    <label for="user" class="form-label">Rol</label>
+                    <select id="rol" name="rol" class="form-select" tabindex="2">
+                        <option <%= user.rol=='administrador' ? "selected" : '' %> value="administrador" >Administrador</option>
+                        <option <%= user.rol=='barbero' ? "selected" : '' %> value="barbero" >Barbero</option>
+                    </select>
+                </div> -->
+                <button type="submit" class="btn btn-barb-color2" id="guardarButton" tabindex="5">Guardar</button>
+                <a href="/" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+ </div>
+<% } %>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    
+    <script>
+      // Función para convertir la fecha al formato MySQL "yyyy-mm-dd"
+      function convertirFecha(fecha) {
+          const partes = fecha.split('/');
+          return partes[2] + '-' + partes[1] + '-' + partes[0];
+      }
+  
+      // Manejador de evento para el clic en el botón de guardar
+      document.getElementById('guardarButton').addEventListener('click', function(event) {
+          // Obtener el valor del campo de fecha
+          const fechaInput = document.getElementById('fecha');
+          const fecha = fechaInput.value;
+  
+          // Convertir la fecha al formato MySQL
+          const fechaMySQL = convertirFecha(fecha);
+  
+          // Actualizar el valor del campo de fecha con el formato MySQL
+          fechaInput.value = fechaMySQL;
+  
+          // Enviar el formulario
+          document.getElementById('editForm').submit();
+      });
+  </script>
+
+
+
+<script>
+  // Obtener referencia a los elementos select y el campo de valor cita
+  const servicioSelect = document.getElementById('servicio');
+  const valorCitaInput = document.getElementById('Valor_Cita');
+
+  // Función para actualizar el valor cita según el servicio seleccionado
+  function actualizarValorCita() {
+      // Obtener el valor seleccionado del servicio
+      const servicioSeleccionado = servicioSelect.value;
+      
+      // Actualizar el valor cita según el servicio seleccionado
+      switch(servicioSeleccionado) {
+          case 'Corte de cabello':
+              valorCitaInput.value = '22000';
+              break;
+          case 'Arreglo de Barba':
+              valorCitaInput.value = '15000';
+              break;
+          case 'Corte de cabello y barba':
+              valorCitaInput.value = '32000';
+              break;
+          default:
+              // Limpiar el campo de valor cita si no se selecciona ningún servicio
+              valorCitaInput.value = '';
+              break;
+      }
+  }
+
+  // Establecer valores predeterminados al cargar la página
+  window.onload = function() {
+      // Establecer el servicio predeterminado como "Corte de cabello"
+      servicioSelect.value = 'Corte de cabello';
+      // Actualizar el valor cita según el servicio predeterminado
+      actualizarValorCita();
+  };
+
+  // Escuchar cambios en el servicio seleccionado
+  servicioSelect.addEventListener('change', actualizarValorCita);
+</script>
+
+
+
+</body>
+</html>

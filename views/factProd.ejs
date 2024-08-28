@@ -1,0 +1,180 @@
+<div class ="container">
+    <h1 class="text-center"> Facturas de Productos</h1>
+    <!--boton de crear -->
+    <a href="/factProdCreate" class="btn btn-outline-barb-color2 mt-4"><i class='bx bxs-plus-circle bx-md'></i></a>
+      
+    <!-- Filtro de fecha -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="fechaDesde" class="col-form-label">Fecha Desde:</label>
+            <input type="date" class="form-control" id="fechaDesde">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="fechaHasta" class="col-form-label">Fecha Hasta:</label>
+            <input type="date" class="form-control" id="fechaHasta">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <button type="button" class="btn btn-dark mt-2" id="btnFiltrar">Filtrar</button>
+          <button type="button" class="btn btn-dark mt-2" id="btnLimpiarFiltros">Limpiar Filtros</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!--tabla -->
+    <table id="citasTable" class="table table-bordered table-striped display text-center mt-4">
+        <thead class="table-dark"> <!--color encabezado de la  tabla -->
+            <tr >
+                <th scope="col">Id</th>
+                <th  scope="col">Fecha</th>
+                <th scope="col">Hora</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Nombre_cliente</th>
+                <th scope="col">Valor factura</th>
+                <th scope="col">Vendedor</th>
+                <th scope="col">Sede</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% results.forEach((factura_producto)=>{ %>
+            <tr>
+                <td><%= factura_producto.id %></td>
+                <td><%= factura_producto.fecha %></td>
+                <td><%= factura_producto.hora %></td>
+                <td><%= factura_producto.producto %></td>
+                <td><%= factura_producto.nombre_cliente %></td>
+                <td><%= factura_producto.valor_factura %></td>
+                <td><%= factura_producto.nombre_vendedor %></td>
+                <td><%= factura_producto.sede %></td>
+                
+                <td>
+                    <a href="/factProdEdit/<%= factura_producto.id %>" class="btn btn-outline-barb-color2 ">editar</a>
+                    <a href="/deleteFactProd/<%= factura_producto.id %>" class="btn btn-outline-danger">borrar</a>
+
+                </td>
+            </tr>
+        <% }) %>
+
+        </tbody>
+    </table>
+
+
+  </div>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+
+<!-- jQuery -->
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+<!-- DataTables -->
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
+<!-- navegacion por pestañas de la tabla -->
+<script>
+$(document).ready(function() {
+    // Inicializar DataTables en tu tabla
+    var table = $('#citasTable').DataTable({
+        "columnsDef":[{
+          "defaultContent":"-",
+          "targets": "_all"
+        }],
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], // Opciones de paginación
+        "pageLength": 10, // Cantidad de registros por página por defecto
+        "language": { // Configuración de idioma
+            "lengthMenu": "Mostrar _MENU_ registros por página",
+            "zeroRecords": "No se encontraron registros",
+            "info": "Mostrando página _PAGE_ de _PAGES_",
+            "infoEmpty": "No hay registros disponibles",
+            "infoFiltered": "(filtrado de _MAX_ registros totales)",
+            "search": "Buscar:",
+            "paginate": {
+                "first": "Primero",
+                "last": "Último",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        },
+        "columnDefs": [
+        { "orderable": false, "targets": -1 } // Deshabilitar la ordenación en la última columna
+    ],
+      "dom": '<"row"<"col-md-6"l><"col-md-6"f>>rt<"row"<"col-md-6"i><"col-md-6"p>>', // Personalización del DOM
+
+    });
+    // Evento click del botón de filtrar
+    $('#btnFiltrar').click(function() {
+            // Obtener fechas desde y hasta
+            var fechaDesde = $('#fechaDesde').val();
+            var fechaHasta = $('#fechaHasta').val();
+            // Filtrar la tabla con las fechas seleccionadas
+            filtrarTabla(fechaDesde, fechaHasta);
+        });
+      
+    // Evento clic del botón para limpiar filtros
+    $('#btnLimpiarFiltros').click(function() {
+        // Recargar la página
+        location.reload();
+    });
+});
+
+
+</script>
+
+<!--- para filtrar por fechas ----------------------------------------------------------------------->
+<!--  jQuery UI Datepicker para filtro por fecha -->
+<!-- jQuery UI Datepicker -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+<script>
+// Función para filtrar la tabla por fechas
+function filtrarTabla(fechaDesde, fechaHasta) {
+$.ajax({
+    url: '/filtrarFactProd', // Ruta para filtrar los datos por fechas
+    method: 'POST',
+    data: { fechaDesde: fechaDesde, fechaHasta: fechaHasta },
+    success: function(data) {
+        // Verificar si los datos son un array
+        if (Array.isArray(data)) {
+            // Convertir los datos al formato esperado por DataTables
+            var tableData = data.map(function(row) {
+                return [
+                    row.id,
+                    row.fecha,
+                    row.hora,
+                    row.producto,
+                    row.nombre_cliente,
+                    row.valor_factura,
+                    row.nombre_vendedor,
+                    row.sede,
+                    '<a href="/factProdEdit/' + row.id + '" class="btn btn-outline-barb-color2">editar</a>' +
+                    '<a href="/deleteFactProd/' + row.id + '" class="btn btn-outline-danger">borrar</a>'
+                ];
+            });
+            // Log de los datos convertidos en la consola
+            console.log('Datos convertidos para DataTables:', tableData);
+
+            // Actualizar los datos de la tabla
+            var table = $('#citasTable').DataTable();
+            table.clear().rows.add(tableData).draw();
+        } else {
+            console.error('Los datos devueltos no están en el formato esperado:', data);
+        }
+    },
+});
+}
+
+</script>

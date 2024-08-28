@@ -1,0 +1,11 @@
+/* Estilos específicos para la página de inicio de sesión */
+#login-page {
+    /* Estilos específicos para la página de inicio de sesión aquí */
+    .btn-bd-primary{font-weight:600;color:#fff;background-color: #CB9F6C;border-color: #CB9F6C;}
+    .btn-bd-primary:hover,.btn-bd-primary:active{color:#fff;background-color:#B27344;border-color:#B27344}
+    .btn-bd-primary:focus{box-shadow: 0 0 0 3px rgba(121,82,179,0.25);}
+
+    .btn-bd-reg{font-weight:600;color:#fff;background-color: #DFC7A4;border-color: #DFC7A4;}
+    .btn-bd-reg:hover,.btn-bd-primary:active{color:#fff;background-color:#CB9F6C;border-color:#CB9F6C}
+    .btn-bd-reg:focus{box-shadow: 0 0 0 3px rgba(121,82,179,0.25);}
+}
