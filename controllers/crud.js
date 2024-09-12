@@ -1,4 +1,51 @@
 const conexion = require('../database/db');
+//CONTROLES DE VENTAS------------------------------------------------|
+//GUARDAR LOS DATOS
+exports.saveVenta=(req,res)=>{
+    const nombre_cliente = req.body.nombre_cliente;
+    const tipo_venta = req.body.tipo_venta;
+    const descripcion = req.body.descripcion;
+    const valor = req.body.valor;
+    const descuentos = req.body.descuentos;
+    const id_vendedor= req.body.id_vendedor;
+    const vendedor = req.body.vendedor;
+    const sede = req.body.sede;
+    const valor_total = req.body.valor_total;
+
+    conexion.query('INSERT INTO ventas SET ?',{nombre_cliente:nombre_cliente,tipo_venta:tipo_venta,descripcion:descripcion,valor:valor,descuentos:descuentos,id_vendedor:id_vendedor,vendedor:vendedor,sede:sede,valor_total:valor_total},(error,results)=>{
+        if(error){0
+            console.log(error);
+        } else{
+            console.log(results);
+            res.redirect('ventas');
+        }
+    })
+};
+
+///ACTUALIZAR LOS DATOS
+exports.updateVenta = (req, res)=>{
+    const id = req.body.id;
+    const nombre = req.body.nombre;
+    const email = req.body.email;
+    const usuario = req.body.usuario;
+    const password = req.body.password;
+    const rol = req.body.rol;
+
+
+    conexion.query('UPDATE ventas SET ? WHERE id = ?',[{nombre:nombre, email:email, usuario:usuario, password:password, rol:rol}, id],(error,results)=>{
+        if(error){
+            console.log(error);
+        } else{
+            res.redirect('ventas');
+        }
+    })
+
+};
+
+
+
+
+
 //CONTROLES DE USUARIOS------------------------------------------------|
 //GUARDAR LOS DATOS
 exports.saveUsuario=(req,res)=>{
@@ -7,7 +54,8 @@ exports.saveUsuario=(req,res)=>{
     const usuario = req.body.usuario;
     const password = req.body.password;
     const rol = req.body.rol;
-    conexion.query('INSERT INTO usuarios SET ?',{nombre:nombre,email:email, usuario:usuario,password:password,rol:rol},(error,results)=>{
+    const sede = req.body.sede;
+    conexion.query('INSERT INTO usuarios SET ?',{nombre:nombre,email:email, usuario:usuario,password:password,rol:rol,sede:sede},(error,results)=>{
         if(error){
             console.log(error);
         } else{
@@ -24,9 +72,10 @@ exports.updateUsuario = (req, res)=>{
     const usuario = req.body.usuario;
     const password = req.body.password;
     const rol = req.body.rol;
+    const sede = req.body.sede;
 
 
-    conexion.query('UPDATE usuarios SET ? WHERE id = ?',[{nombre:nombre, email:email, usuario:usuario, password:password, rol:rol}, id],(error,results)=>{
+    conexion.query('UPDATE usuarios SET ? WHERE id = ?',[{nombre:nombre, email:email, usuario:usuario, password:password, rol:rol, sede:sede}, id],(error,results)=>{
         if(error){
             console.log(error);
         } else{
@@ -35,6 +84,9 @@ exports.updateUsuario = (req, res)=>{
     })
 
 };
+
+
+
 //CONTROLES DE CLIENTES------------------------------------------------|
 //GUARDAR LOS DATOS
 exports.saveCliente=(req,res)=>{

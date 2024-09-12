@@ -17,7 +17,7 @@
         <% if (user) { %>
             <div class="container mt-4" >
                <div class="card border-secondary">
-                   <div class=" card-header bg-dark text-light ">Editar Registro</div>
+                   <div class=" card-header bg-dark text-light ">Editar Usuario</div>
                    <div class="card-body">
                        <form action="/updateUsuario" method="POST">
                            <input id="id" name="id" value="<%=user.id %>" hidden>
@@ -52,6 +52,14 @@
                                    <option <%= user.rol=='barbero' ? "selected" : '' %> value="barbero" >Barbero</option>
                                </select>
                            </div>
+
+                           <div class="mb-3">
+                            <label for="user" class="form-label">Sede</label>
+                            <select id="rol" name="rol" class="form-select" tabindex="2">
+                                <option <%= user.rol=='la_estrella' ? "selected" : '' %> value="la_estrella" >la estrella</option>
+                                <option <%= user.rol=='la_enea' ? "selected" : '' %> value="la_enea" >la Enea</option>
+                            </select>
+                        </div>
                            <button type="submit" class="btn btn-barb-color2" tabindex="5">Guardar</button>
                            <a href="/usuarios" class="btn btn-secondary">Cancelar</a>
                        </form>

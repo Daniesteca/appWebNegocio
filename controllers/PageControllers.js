@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 const conexion = require('../database/db');
-
 //PRIMERA PAGINA QUE CARGA INDEX----------------------------------------****|
 const vistaIndex = (req, res)=>{
     res.render('index.html',{layout:false,alert:false})
@@ -19,7 +18,58 @@ const vistaLogin = (req, res)=>{
     res.render('login',{layout:false,alert:false})
 }
 
+//PAGINA DE CARRITO--------------------------------------------------------------------------------------------------|
 
+const vistaCarrito = (req, res)=>{
+    res.render('carritoVenta',{layout:true,usuario:req.usuario,alert:false})
+}
+
+//PPAGINA DE VENTAS----------------------------------------------------------------------------------------------|
+
+//pagina principal VENTAS
+const vistaVentas = (req, res)=>{
+    conexion.query('SELECT id, CONCAT(DATE_FORMAT(fecha_hora, "%d/%m/%Y")," - ",TIME_FORMAT(fecha_hora, "%H:%i")) AS fecha_hora,id_venta,nombre_cliente,tipo_venta,descripcion,CONCAT("$", FORMAT(valor, 0)) AS valor , CONCAT("$", FORMAT(descuentos, 0)) AS descuentos, CONCAT("$", FORMAT(valor_total, 0)) AS valor_total,vendedor,sede FROM ventas',(error, results)=>{
+        if(error){
+            throw error;
+        }else{
+            res.render('ventas', { layout: true, results:results});
+        }
+    }) 
+}
+
+//IMPRIMIR CADA FACTURA DE VENTA______________________________________________________________________|
+const ventaImprimirFact= (req, res)=>{
+    const id = req.params.id;
+    conexion.query('SELECT id, CONCAT(DATE_FORMAT(fecha_hora, "%d/%m/%Y")," - ",TIME_FORMAT(fecha_hora, "%H:%i")) AS fecha_hora,id_venta ,nombre_cliente , tipo_venta , descripcion , CONCAT("$", FORMAT(valor, 0)) AS valor , CONCAT("$", FORMAT(descuentos, 0)) AS descuentos, CONCAT("$", FORMAT(valor_total, 0)) AS valor_total,vendedor,sede FROM ventas WHERE id=?',[id], (error, results)=>{
+        if(error){
+            throw error;
+        }else{
+            res.render('ventFactImpr', { layout: true, user:results[0]});
+            // console.log(results);
+
+        }
+})
+}
+
+
+const vCreateVenta = (req, res)=>{
+    res.render('ventasCreate')
+}
+
+
+
+
+//formulario editar venta
+const veditVenta = (req, res)=>{
+    const id = req.params.id;
+    conexion.query('SELECT * FROM ventas WHERE id=?',[id], (error, results)=>{
+        if(error){
+            throw error;
+        }else{
+            res.render('ventasEdit', { layout: true, user:results[0]});
+        }
+    })
+} 
 
 // FORMULARIOS PARA USUARIOS-----------------------------------------------|
 //pagina principal usuarios
@@ -142,7 +192,7 @@ const vEditCita =  (req, res)=>{
 })
 }
 
-// FORMULARIOS PARA CITAS-----------------------------------------------|
+// FORMULARIOS PARA FACTURA PRODUCTO-----------------------------------------------|
 //principal 
 const vistaFactProd = (req, res)=>{
 
@@ -155,6 +205,7 @@ const vistaFactProd = (req, res)=>{
     }) 
 
 }
+
 
 //CREAR FACTURA_PRODUCTO
 const vCreateFactProd = (req, res)=>{
@@ -174,7 +225,24 @@ const vEditFactProd = (req, res)=>{
 })
 }
 
-// FORMULARIOS PARA CITAS-----------------------------------------------|
+//imprimir factura servicio
+const vImprimirFactProd = (req, res)=>{
+    const id = req.params.id;
+    conexion.query('SELECT id,DATE_FORMAT(fecha,"%d/%m/%Y") AS fecha,TIME_FORMAT(hora,"%H:%i") as hora,producto,id_producto,id_cliente,nombre_cliente,CONCAT("$ ", FORMAT(valor_factura, 0)) AS valor_factura,nombre_vendedor,sede FROM factura_producto WHERE id=?',[id], (error, results)=>{
+        if(error){
+            throw error;
+        }else{
+            res.render('factProdImpr', { layout: true, user:results[0]});
+            // console.log(results);
+
+        }
+})
+}
+
+
+
+
+// FORMULARIOS PARA FACTURA SERVICIO-----------------------------------------------|
 //principal 
 const vistaFactServ = (req, res)=>{
 
@@ -206,10 +274,29 @@ const vEditFactServi =  (req, res)=>{
 })
 }
 
+//imprimir factura servicio
+const vImprimirFactServ = (req, res)=>{
+    const id = req.params.id;
+    conexion.query('SELECT id,DATE_FORMAT(fecha,"%d/%m/%Y") AS fecha,TIME_FORMAT(hora,"%H:%i") as hora,producto,id_producto,id_cliente,nombre_cliente,CONCAT("$ ", FORMAT(valor_factura, 0)) AS valor_factura,nombre_vendedor,sede FROM factura_producto WHERE id=?',[id], (error, results)=>{
+        if(error){
+            throw error;
+        }else{
+            res.render('factProdImpr', { layout: true, user:results[0]});
+            // console.log(results);
+
+        }
+})
+}
+
+
 module.exports ={
     vistaIndex,
     vistaLogin,
     vistaPrincipal,
+    vistaCarrito,
+    vistaVentas,
+    vCreateVenta,
+    veditVenta,
     vistaUsuarios,
     vCreateUsuario,
     veditUsuario,
@@ -225,7 +312,10 @@ module.exports ={
     vistaFactProd,
     vCreateFactProd,
     vEditFactProd,
+    vImprimirFactProd,
     vistaFactServ,
     vCreateFactServ,
-    vEditFactServi
+    vEditFactServi,
+    vImprimirFactServ,
+    ventaImprimirFact
 }

@@ -1,0 +1,100 @@
+<div class="container mt-4" >
+    <div class="card border-secondary">
+        <div class="card-header bg-dark text-light">Ingresar cita</div>
+        <div class="card-body">
+            <form action="/saveVenta" method="POST">
+
+                    <div class="mb-3">
+                    <label for="user" class="form-label">Nombre Cliente</label>
+                    <label for="usuario" class="form-label"></label>
+                    <input type="text" class="form-control" id="nombre_cliente" name="nombre_cliente" tabindex="1">
+                    </div>
+
+                <div class="mb-3">
+                    <label for="user" class="form-label">Tipo de venta</label>
+                    <input type="text" class="form-control" id="tipo_venta" name="tipo_venta" tabindex="1">
+                </div>
+
+                <!-- deberia ser 1 o dos tablas para productos y servicios con un check para seleccionar , y luego concatenar o listar productos -->
+                <div class="mb-3">
+                    <label for="user" class="form-label">descripcion</label>
+                    <input type="text" class="form-control"id="descripcion" name="descripcion" tabindex="1">
+                </div>
+
+                
+                <div class="mb-3">
+                    <label for="user" class="form-label">Valor</label>
+                    <label for="usuario" class="form-label"></label>
+                    <input type="text" class="form-control" id="valor" name="valor" tabindex="1">
+                </div> 
+
+                <div class="mb-3">
+                    <label for="user" class="form-label">Descuentos</label>
+                    <label for="usuario" class="form-label"></label>
+                    <input type="text" class="form-control" id="descuentos" name="descuentos" tabindex="1">
+                </div>
+
+                <div class="mb-3">
+                    <label for="user" class="form-label">ID Vendedor</label>
+                    <label for="usuario" class="form-label"></label>
+                    <input type="text" class="form-control" id="id_vendedor" name="id_vendedor" tabindex="1">
+                </div>  
+
+                <div class="mb-3">
+                    <label for="user" class="form-label">Vendedor</label>
+                    <label for="usuario" class="form-label"></label>
+                    <input type="text" class="form-control" id="vendedor" name="vendedor" tabindex="1">
+                </div>
+      
+                <div class="mb-3">
+                    <label for="user" class="form-label">Sede</label>
+                    <label for="usuario" class="form-label"></label>
+                    <input type="text" class="form-control" id="sede" name="sede" tabindex="1">
+                </div>
+
+                <div class="mb-3">
+                    <label for="user" class="form-label">Total</label>
+                    <label for="usuario" class="form-label"></label>
+                    <input type="text" class="form-control" id="valor_total" name="valor_total" tabindex="1">
+                </div> 
+                
+                <button type="submit" class="btn btn-barb-color2" id="guardarButton" tabindex="5">Guardar</button>
+                <a href="/ventas" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+
+    </div>
+ </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+<!-- script para autocompletar el valor  -->
+<script>
+  // Obtener referencia a los elementos select y el campo de valor cita
+  const servicioSelect = document.getElementById('servicio');
+  const valorCitaInput = document.getElementById('Valor_Cita');
+
+  // Función para actualizar el valor cita según el servicio seleccionado
+  servicioSelect.addEventListener('change', function() {
+      // Obtener el valor seleccionado del servicio
+      const servicioSeleccionado = servicioSelect.value;
+      
+      // Actualizar el valor cita según el servicio seleccionado
+      switch(servicioSeleccionado) {
+          case 'Corte de cabello':
+              valorCitaInput.value = '22000';
+              break;
+          case 'Arreglo de Barba':
+              valorCitaInput.value = '15000';
+              break;
+          case 'Corte de cabello y barba':
+              valorCitaInput.value = '32000';
+              break;
+          default:
+              // Limpiar el campo de valor cita si no se selecciona ningún servicio
+              valorCitaInput.value = '';
+              break;
+      }
+  });
+</script>
+  

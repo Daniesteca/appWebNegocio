@@ -1,8 +1,8 @@
 <div class="container mt-4" >
     <div class="card border-secondary">
-        <div class="card-header bg-dark text-light">Nuevo Registro</div>
+        <div class="card-header bg-dark text-light">Ingresar nuevo usuario</div>
         <div class="card-body">
-            <form action="/register" method="POST">
+            <form action="/register" method="POST">  <!-- de la auten -->
                 <div class="mb-3">
                     <label for="user" class="form-label">Nombre</label>
                     <label for="usuario" class="form-label"></label>
@@ -32,6 +32,14 @@
                     <select id="rol" name="rol" class="form-select" tabindex="2">
                         <option value="administrador" selected>Administrador</option>
                         <option value="barbero">Barbero</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="user" class="form-label">Sede</label>
+                    <select id="sede" name="sede" class="form-select" tabindex="2">
+                        <option value="la_estrella" selected>La estrella</option>
+                        <option value="la_enea">La enea</option>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-barb-color2" tabindex="5">Guardar</button>

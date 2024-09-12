@@ -12,9 +12,10 @@ exports.register = async (req, res)=>{
         const usuario = req.body.usuario
         const password = req.body.password
         const rol = req.body.rol
+        const sede = req.body.sede
         let passHash = await bcryptjs.hash(password, 8)
         //console.log(passHash)
-        conexion.query('INSERT INTO usuarios  SET ?',{nombre:nombre,email:email, usuario:usuario,password:passHash,rol:rol},(error, results)=>{
+        conexion.query('INSERT INTO usuarios  SET ?',{nombre:nombre,email:email, usuario:usuario,password:passHash,rol:rol,sede:sede},(error, results)=>{
             if(error){console.log(error)}
             res.redirect('usuarios')
         })
@@ -59,6 +60,9 @@ exports.login = async (req, res)=>{
                     const token = jwt.sign({id:id}, process.env.JWT_SECRETO,{
                         expiresIn: process.env.JWT_TIEMPO_EXPIRA
                     })
+                    //generar el token sin fecha de expiracion
+                    //const token = jwt.sign({id:id}, process.env.JWT_SECRETO)
+                    // console.log("TOKEN: "+token+" para el Usuario: "+usuario)
 
                     const cookiesOptions = {
                         expires: new Date(Date.now()+process.env.JWT_COOKIE_EXPIRES* 24 * 60 * 60 * 1000),

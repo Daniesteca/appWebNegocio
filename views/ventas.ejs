@@ -1,0 +1,169 @@
+<title>Administracion de Ventas</title>
+
+   
+   <!-- estilos excel -->
+   <link rel="stylesheet" href="https://cdn.datatables.net/2.1.5/css/dataTables.dataTables.css">
+   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.1.2/css/buttons.dataTables.css">
+
+<div class ="container">
+  <h1 class="text-center">Ventas</h1>
+    <!--boton de crear -->
+    <a href="/carritoVenta" class="btn btn-outline-barb-color2 mt-4"><i class='bx bxs-plus-circle bx-md'></i></a>
+    
+  
+    <!-- Filtro de fecha -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="fechaDesde" class="col-form-label">Fecha Desde:</label>
+            <input type="date" class="form-control" id="fechaDesde">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="fechaHasta" class="col-form-label">Fecha Hasta:</label>
+            <input type="date" class="form-control" id="fechaHasta">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <button type="button" class="btn btn-dark mt-2" id="btnFiltrar">Filtrar</button>
+          <button type="button" class="btn btn-dark mt-2" id="btnLimpiarFiltros">Limpiar Filtros</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!--tabla -->
+    <table id="ventasTable" class="table table-bordered table-striped display text-center mt-4">
+        <thead class="table-dark"> <!--color encabezado de la  tabla -->
+            <tr >
+                <th scope="col">id</th>
+                <th  scope="col">fecha_hora</th>
+                <th  scope="col">id de venta</th>
+                <th scope="col">Nombre del cliente</th>
+                <th scope="col">Tipo de venta</th>
+                <th scope="col">descripcion</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Descuentos</th>
+                <th scope="col">Valor total</th>
+                <th scope="col">Vendedor</th>
+                <th scope="col">Sede</th>
+                <!-- <th scope="col">Acciones</th> -->
+                <th scope="col">Imprimir</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% results.forEach((venta)=>{ %>
+            <tr>
+                <td><%= venta.id %></td>
+                <td><%= venta.fecha_hora %></td>
+                <td><%= venta.id_venta %></td>
+                <td><%= venta.nombre_cliente %></td>
+                <td><%= venta.tipo_venta %></td>
+                <td><%= venta.descripcion %></td>
+                <td><%= venta.valor %></td>
+                <td><%= venta.descuentos %></td>
+                <td><%= venta.valor_total %></td>
+                <td><%= venta.vendedor %></td>
+                <td><%= venta.sede %></td>
+                
+                <!-- <td>
+                    <a href="/ventasEdit/<%= venta.id %>" class="btn btn-outline-barb-color2 "><i class="fa-solid fa-file-pen"></i></a>
+                    <a href="/deleteVentas/<%= venta.id %>" class="btn btn-outline-danger"><i class="fa-solid fa-trash-can"></i></a>
+
+                </td> -->
+                <td>
+                  <a href="/ventFactImpr/<%= venta.id %>" class="btn btn-outline-barb-color2 "><i class="fa-solid fa-file-pdf"></i></a>
+              </td>
+            </tr>
+        <% }) %>
+
+        </tbody>
+    </table>
+
+
+  </div>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+<!-- DataTables -->
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
+
+<!--- para filtrar por fechas ----------------------------------------------------------------------->
+<!--  jQuery UI Datepicker para filtro por fecha -->
+<!-- jQuery UI Datepicker -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+<script>
+// Función para filtrar la tabla por fechas
+function filtrarTabla(fechaDesde, fechaHasta) {
+$.ajax({
+    url: '/filtrar', // Ruta para filtrar los datos por fechas
+    method: 'POST',
+    data: { fechaDesde: fechaDesde, fechaHasta: fechaHasta },
+    success: function(data) {
+        // Verificar si los datos son un array
+        if (Array.isArray(data)) {
+            // Convertir los datos al formato esperado por DataTables
+            var tableData = data.map(function(row) {
+                return [
+                    row.id,
+                    row.fecha_hora,
+                    row.nombre_cliente,
+                    row.tipo_venta,
+                    row.descripcion,
+                    row.valor,
+                    row.descuentos,
+                    row.valor_total,
+                    row.vendedor,
+                    row.sede,
+                    '<a href="/ventasEdit/' + row.id + '" class="btn btn-outline-barb-color2">editar</a>' +
+                    '<a href="/deleteVentas/' + row.id + '" class="btn btn-outline-danger">borrar</a>'
+                ];
+            });
+            // Log de los datos convertidos en la consola
+            console.log('Datos convertidos para DataTables:', tableData);
+
+            // Actualizar los datos de la tabla
+            var table = $('#ventasTable').DataTable();
+            table.clear().rows.add(tableData).draw();
+        } else {
+            console.error('Los datos devueltos no están en el formato esperado:', data);
+        }
+    },
+});
+}
+</script>
+
+<!-- todos los links excel -->
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.1.5/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.1.2/js/dataTables.buttons.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.1.2/js/buttons.dataTables.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.1.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.1.2/js/buttons.print.min.js"></script>
+
+<script>
+
+new DataTable('#ventasTable', {
+layout: {
+    topStart: {
+        buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+    }
+}
+});
+</script>

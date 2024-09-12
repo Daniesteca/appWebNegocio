@@ -10,7 +10,7 @@
     <!--Usamos boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-    <title>EDITAR CLIENTES</title>
+    <title>Editar clientes</title>
 </head>
   <body>
    
@@ -18,7 +18,7 @@
  <% if (user) { %>
  <div class="container mt-4" >
     <div class="card border-secondary">
-        <div class="card-header bg-dark text-light">Editar Registro</div>
+        <div class="card-header bg-dark text-light">Editar clientes</div>
         <div class="card-body">
             <form action="/updateCliente" method="POST">
                 <input id="id" name="id" value="<%=user.id %>" hidden>

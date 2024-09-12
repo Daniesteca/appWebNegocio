@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="/style.css" rel="stylesheet" >
+    <!--Usamos boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- estilos excel -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.5/css/dataTables.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.1.2/css/buttons.dataTables.css">
+
+
+    <title>Imprimir factura venta</title>
+</head>
+  <body>
+   
+ <% if (user) { %>
+ <!-- formulario tabla -->
+  <div class="container mt-4">
+    <div class="card border-secondary">
+        <div class="card-header bg-dark text-light text-center fw-bolder " >Datos del pago</div>
+        <img src="../public/img/payment_logo.png" class="img-fluid mx-auto mt-4" style="width: 250px; height: 250px;" alt="logo">
+        <div class="card-body">
+            <form action="/imprimir-factura/" method="get">
+            <!-- id del producto -->
+            <input id="id" name="id" value="<%=user.id %>" hidden> 
+                
+    <!--tabla -->
+    <table id="facturaProd" class="table table-bordered table-striped display text-center mt-4 facturaProd">
+        <thead class="table-dark"> <!--color encabezado de la  tabla -->
+            <tr >
+                <th scope="col">Informacion </th>
+                <th  scope="col">Detalle</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td> <span>Fecha</span></td>
+                <td><span id="fecha" name="fecha"><%=user.fecha %></span></td>
+            </tr>
+            <tr>
+                <td> <span>Hora</span></td>
+                <td> <span id="hora" name="hora"><%=user.hora %></span></td>
+            </tr>
+            
+            <tr>
+                <td> <span>Producto</span></td>
+                <td><span id="hora" name="hora"><%=user.producto %></span></td>
+            </tr>
+            
+            <tr>
+                <td> <span>Cliente</span></td>
+                <td><span id="hora" name="hora"><%=user.nombre_cliente %></span></td>
+            </tr>
+            
+            <tr>
+                <td> <span>Valor</span></td>
+                <td><span id="hora" name="hora"><%=user.valor_factura %></td>
+            </tr>
+            
+            <tr>
+                <td> <span>Vendedor</span></td>
+                <td><span id="hora" name="hora"><%=user.nombre_vendedor %></span></td>
+            </tr>
+            <tr>
+                <td> <span>Sede</span></td>
+                <td><span id="hora" name="hora"><%=user.sede %></span></td>
+                <!-- accioness -->
+            </tr>
+        </tbody>
+    </table>
+    <!-- <button type="submit" class="btn btn-barb-color2" id="imprimirButton" tabindex="5">Imprimir</button> -->
+    <a href="/factProd" class="btn btn-secondary">Volver</a>
+            </form>
+        </div>
+    </div>
+  </div>
+
+
+<% } %>
+  
+    <!-- scrip butstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+        <!-- todos los links excel -->
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <script src="https://cdn.datatables.net/2.1.5/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.1.2/js/dataTables.buttons.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.1.2/js/buttons.dataTables.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.1.2/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.1.2/js/buttons.print.min.js"></script>
+    
+        <script>
+    
+    new DataTable('#facturaProd', {
+        layout: {
+            topStart: {
+                buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+            }
+        }
+    });
+        </script>
+
+
+
+
+</body>
+</html>
