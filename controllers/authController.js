@@ -7,17 +7,36 @@ const{promisify} = require('util')
 exports.register = async (req, res)=>{
 
     try{
-        const nombre = req.body.nombre
-        const email = req.body.email
-        const usuario = req.body.usuario
-        const password = req.body.password
-        const rol = req.body.rol
-        const sede = req.body.sede
+        const nombre = req.body.nombre;
+        const email = req.body.email;
+        const usuario = req.body.usuario;
+        const password = req.body.password;
+        const rol = req.body.rol;
+        const sede = req.body.sede;
         let passHash = await bcryptjs.hash(password, 8)
         //console.log(passHash)
         conexion.query('INSERT INTO usuarios  SET ?',{nombre:nombre,email:email, usuario:usuario,password:passHash,rol:rol,sede:sede},(error, results)=>{
             if(error){console.log(error)}
             res.redirect('usuarios')
+        })
+    }catch(error) {
+        console.log(error)
+    }
+}
+
+// metodo para registrar cliente
+exports.registerClient = async (req, res)=>{
+
+    try{
+        const nombre = req.body.nombre;
+        const email = req.body.email;
+        const usuario = req.body.usuario;
+        const password = req.body.password;
+        let passHash = await bcryptjs.hash(password, 8)
+        //console.log(passHash)
+        conexion.query('INSERT INTO cliente SET ?',{nombre:nombre,email:email, client_usu:usuario,client_pasw:passHash},(error, results)=>{
+            if(error){console.log(error)}
+            res.redirect('clientes')
         })
     }catch(error) {
         console.log(error)
