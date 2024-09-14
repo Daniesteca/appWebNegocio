@@ -3,57 +3,75 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../public/isadmin.css">
         <title>Administracion de Usuarios</title>
     </head>
     <body>
 
-        <div class="content">
-            <div class ="container">
-                <h1 class="text-center"> Administracion de Usuarios </h1>
-                <!--boton de crear -->
-                <a href="/usuariosCreate" class="btn btn-outline-barb-color2 mt-4"><i class='bx bxs-plus-circle bx-md'></i></a>
-                <!--tabla -->
-                <table class="table table-bordered table-striped text-center mt-4">
-                    <thead class="table-dark"> <!--color encabezado de la  tabla -->
-                        <tr >
-                            <th scope="col">id</th>
-                            <th scope="col">nombre</th>
-                            <th scope="col">email</th>
-                            <th scope="col">usuario</th>
-                            <th scope="col">password</th>
-                            <th scope="col">Rol</th>
-                            <th scope="col">Sede</th>
-                            <th scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-        
-                    <tbody>
-                        <% results.forEach((usuarios)=>{ %>
-                        <tr>
-                            <td><%= usuarios.id %></td>
-                            <td><%= usuarios.nombre %></td>
-                            <td><%= usuarios.email %></td>
-                            <td><%= usuarios.usuario %></td>
-                            <td><%= usuarios.password %></td>
-                            <td><%= usuarios.rol %></td>
-                            <td><%= usuarios.sede %></td>
-                            
-                            
-                            <td>
-                                <a href="/usuariosEdit/<%= usuarios.id %>" class="btn btn-outline-barb-color2 ">editar</a>
-                                <a href="/deleteUsuario/<%= usuarios.id %>" class="btn btn-outline-danger">borrar</a>
-        
-                            </td>
-                        </tr>
-                    <% }) %>
-        
-                    </tbody>
-                </table>
-        
-              </div>
-    
+
+        <% if (rol =='administrador') { %>
+
+        <div class="container2">
+            <!-- sidebar -->
+            <aside class="sidebar">
+              <nav class="  nav flex-column navbar-nav me-auto mb-2 mb-lg-0">
+                <a class="nav-link "  href="/usuarios">Usuarios</a>
+                <a class="nav-link " href="/clientes">Clientes</a>
+                <a class="nav-link " href="/factProd">Factura producto</a>
+                <a class="nav-link " href="/factServi">Factura servicio</a>
+              </nav>
+            </aside>
+
+            <div class="content">
+                <div class ="container">
+                    <h1 class="text-center"> Administracion de Usuarios </h1>
+                    <!--boton de crear -->
+                    <a href="/usuariosCreate" class="btn btn-outline-barb-color2 mt-4"><i class='bx bxs-plus-circle bx-md'></i></a>
+                    <!--tabla -->
+                    <table class="table table-bordered table-striped text-center mt-4">
+                        <thead class="table-dark"> <!--color encabezado de la  tabla -->
+                            <tr >
+                                <th scope="col">id</th>
+                                <th scope="col">nombre</th>
+                                <th scope="col">email</th>
+                                <th scope="col">usuario</th>
+                                <th scope="col">password</th>
+                                <th scope="col">Rol</th>
+                                <th scope="col">Sede</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+            
+                        <tbody>
+                            <% results.forEach((usuarios)=>{ %>
+                            <tr>
+                                <td><%= usuarios.id %></td>
+                                <td><%= usuarios.nombre %></td>
+                                <td><%= usuarios.email %></td>
+                                <td><%= usuarios.usuario %></td>
+                                <td><%= usuarios.password %></td>
+                                <td><%= usuarios.rol %></td>
+                                <td><%= usuarios.sede %></td>
+                                
+                                
+                                <td>
+                                    <a href="/usuariosEdit/<%= usuarios.id %>" class="btn btn-outline-barb-color2 ">editar</a>
+                                    <a href="/deleteUsuario/<%= usuarios.id %>" class="btn btn-outline-danger">borrar</a>
+            
+                                </td>
+                            </tr>
+                        <% }) %>
+            
+                        </tbody>
+                    </table>           
+                </div>
+            </div>
+            
         </div>
-     
+            
+          <% } %>
+
+
         
     </body>
     </html>

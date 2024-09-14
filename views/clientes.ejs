@@ -3,53 +3,73 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="stylesheet" href="../public/isadmin.css">
     <title>Clientes</title>
 </head>
   <body >
 
-      <div class ="container">
-        <h1 class="text-center"> Clientes</h1>
-        <!--boton de crear -->
-        <a href="/clientesCreate" class="btn btn-outline-barb-color2 mt-4"><i class='bx bxs-plus-circle bx-md'></i></a>
-        <!--tabla -->
-        <table class="table table-bordered table-striped text-center mt-4">
-            <thead class="table-dark"> <!--color encabezado de la  tabla -->
-                <tr >
-                    <th scope="col">Id</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Usuario_cliente</th>
-                    <th scope="col">Password</th>
-                    <!-- <th scope="col">Rol</th> -->
-                    <th scope="col">Acciones</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <% results.forEach((cliente)=>{ %>
-                <tr>
-                    <td><%= cliente.id %></td>
-                    <td><%= cliente.nombre %></td>
-                    <td><%= cliente.email %></td>
-                    <td><%= cliente.client_usu %></td>
-                    <td><%= cliente.client_pasw %></td>
-                    <!-- <td><%= cliente.rol %></td> -->
-                    
-                    
-                    <td>
-                        <a href="/clientesEdit/<%= cliente.id %>" class="btn btn-outline-barb-color2">editar</a>
-                        <a href="/deleteCliente/<%= cliente.id %>" class="btn btn-outline-danger">borrar</a>
-
-                    </td>
-                </tr>
-            <% }) %>
-
-            </tbody>
-        </table>
 
 
-      </div>
+        <% if (rol =='administrador') { %>
+
+        <div class="container2">
+            <!-- sidebar -->
+            <aside class="sidebar">
+              <nav class="  nav flex-column navbar-nav me-auto mb-2 mb-lg-0">
+                <a class="nav-link "  href="/usuarios">Usuarios</a>
+                <a class="nav-link " href="/clientes">Clientes</a>
+                <a class="nav-link " href="/factProd">Factura producto</a>
+                <a class="nav-link " href="/factServi">Factura servicio</a>
+              </nav>
+            </aside>
+
+            <div class ="container">
+              <h1 class="text-center"> Clientes</h1>
+              <!--boton de crear -->
+              <a href="/clientesCreate" class="btn btn-outline-barb-color2 mt-4"><i class='bx bxs-plus-circle bx-md'></i></a>
+              <!--tabla -->
+              <table class="table table-bordered table-striped text-center mt-4">
+                  <thead class="table-dark"> <!--color encabezado de la  tabla -->
+                      <tr >
+                          <th scope="col">Id</th>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Usuario_cliente</th>
+                          <th scope="col">Password</th>
+                          <!-- <th scope="col">Rol</th> -->
+                          <th scope="col">Acciones</th>
+                      </tr>
+                  </thead>
+  
+                  <tbody>
+                      <% results.forEach((cliente)=>{ %>
+                      <tr>
+                          <td><%= cliente.id %></td>
+                          <td><%= cliente.nombre %></td>
+                          <td><%= cliente.email %></td>
+                          <td><%= cliente.client_usu %></td>
+                          <td><%= cliente.client_pasw %></td>
+                          <!-- <td><%= cliente.rol %></td> -->
+                          
+                          
+                          <td>
+                              <a href="/clientesEdit/<%= cliente.id %>" class="btn btn-outline-barb-color2">editar</a>
+                              <a href="/deleteCliente/<%= cliente.id %>" class="btn btn-outline-danger">borrar</a>
+  
+                          </td>
+                      </tr>
+                  <% }) %>
+  
+                  </tbody>
+              </table>
+          </div>
+  
+         </div>
+            
+          <% } %>
+
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   

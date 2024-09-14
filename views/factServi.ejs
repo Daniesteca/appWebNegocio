@@ -1,89 +1,122 @@
-    <!--Bootstrap css -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link href="/style.css" rel="stylesheet" >
-   
-   <!-- estilos excel -->
-   <link rel="stylesheet" href="https://cdn.datatables.net/2.1.5/css/dataTables.dataTables.css">
-   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.1.2/css/buttons.dataTables.css">
+<head>
+          <!--Bootstrap css -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link href="/style.css" rel="stylesheet" >
+      
+      <!-- estilos excel -->
+      <link rel="stylesheet" href="https://cdn.datatables.net/2.1.5/css/dataTables.dataTables.css">
+      <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.1.2/css/buttons.dataTables.css">
 
-   <title>Facturacion de servicios</title>
+      <!-- ESTILOS SIDEBAR -->
+      <link rel="stylesheet" href="../public/isadmin.css">
 
-<div class ="container">
-    <h1 class="text-center"> Facturacion de  Servicios</h1>
-    <!--boton de crear -->
-    <a href="/factServiCreate" class="btn btn-outline-barb-color2 mt-4"><i class='bx bxs-plus-circle bx-md'></i></a>
+      <title>Facturacion de servicios</title>
+
+</head>
     
+<body>
+
+
+
+    <% if (rol =='administrador') { %>
+
+    <div class="container2">
+        <!-- sidebar -->
+        <aside class="sidebar">
+          <nav class="  nav flex-column navbar-nav me-auto mb-2 mb-lg-0">
+            <a class="nav-link "  href="/usuarios">Usuarios</a>
+            <a class="nav-link " href="/clientes">Clientes</a>
+            <a class="nav-link " href="/factProd">Factura producto</a>
+            <a class="nav-link " href="/factServi">Factura servicio</a>
+          </nav>
+        </aside>
+
+        <div class ="container">
+          <h1 class="text-center"> Facturacion de  Servicios</h1>
+          <!--boton de crear -->
+          <a href="/factServiCreate" class="btn btn-outline-barb-color2 mt-4"><i class='bx bxs-plus-circle bx-md'></i></a>
+          
+        
+          <!-- Filtro de fecha -->
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="fechaDesde" class="col-form-label">Fecha Desde:</label>
+                  <input type="date" class="form-control" id="fechaDesde">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="fechaHasta" class="col-form-label">Fecha Hasta:</label>
+                  <input type="date" class="form-control" id="fechaHasta">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <button type="button" class="btn btn-dark mt-2" id="btnFiltrar">Filtrar</button>
+                <button type="button" class="btn btn-dark mt-2" id="btnLimpiarFiltros">Limpiar Filtros</button>
+              </div>
+            </div>
+          </div>
   
-    <!-- Filtro de fecha -->
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="fechaDesde" class="col-form-label">Fecha Desde:</label>
-            <input type="date" class="form-control" id="fechaDesde">
-          </div>
+  
+          <!--tabla -->
+          <table id="factServTable" class="table table-bordered table-striped display text-center mt-4">
+              <thead class="table-dark"> <!--color encabezado de la  tabla -->
+                  <tr >
+                      <th scope="col">Id</th>
+                      <th  scope="col">Fecha</th>
+                      <th scope="col">Hora</th>
+                      <th scope="col">Servicio</th>
+                      <th scope="col">Nombre_cliente</th>
+                      <th scope="col">Valor factura</th>
+                      <th scope="col">Vendedor</th>
+                      <th scope="col">Sede</th>
+                      <th scope="col">Editar/Borrar</th>
+                      <th scope="col">Imprimir</th>
+                  </tr>
+              </thead>
+  
+              <tbody>
+                  <% results.forEach((factura_servicio)=>{ %>
+                  <tr>
+                      <td><%= factura_servicio.id %></td>
+                      <td><%= factura_servicio.fecha %></td>
+                      <td><%= factura_servicio.hora %></td>
+                      <td><%= factura_servicio.servicio %></td>
+                      <td><%= factura_servicio.nombre_cliente %></td>
+                      <td><%= factura_servicio.valor_factura %></td>
+                      <td><%= factura_servicio.nombre_vendedor %></td>
+                      <td><%= factura_servicio.sede %></td>
+                      
+                      <td>
+                          <a href="/factServiEdit/<%= factura_servicio.id %>" class="btn btn-outline-barb-color2 "><i class="fa-solid fa-file-pen"></i></a>
+                          <a href="/deleteFactServ/<%= factura_servicio.id %>" class="btn btn-outline-danger"><i class="fa-solid fa-trash-can"></i></a>
+  
+                      </td>
+                      <td>
+                        <a href="/factServImpr/<%= factura_servicio.id %>" class="btn btn-outline-barb-color2 "><i class="fa-solid fa-file-pdf"></i></a>
+                    </td>
+                  </tr>
+              <% }) %>
+  
+              </tbody>
+          </table>
+  
+  
         </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="fechaHasta" class="col-form-label">Fecha Hasta:</label>
-            <input type="date" class="form-control" id="fechaHasta">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <button type="button" class="btn btn-dark mt-2" id="btnFiltrar">Filtrar</button>
-          <button type="button" class="btn btn-dark mt-2" id="btnLimpiarFiltros">Limpiar Filtros</button>
-        </div>
-      </div>
+  
     </div>
+        
+      <% } %>
 
 
-    <!--tabla -->
-    <table id="factServTable" class="table table-bordered table-striped display text-center mt-4">
-        <thead class="table-dark"> <!--color encabezado de la  tabla -->
-            <tr >
-                <th scope="col">Id</th>
-                <th  scope="col">Fecha</th>
-                <th scope="col">Hora</th>
-                <th scope="col">Servicio</th>
-                <th scope="col">Nombre_cliente</th>
-                <th scope="col">Valor factura</th>
-                <th scope="col">Vendedor</th>
-                <th scope="col">Sede</th>
-                <th scope="col">Editar/Borrar</th>
-                <th scope="col">Imprimir</th>
-            </tr>
-        </thead>
+  
 
-        <tbody>
-            <% results.forEach((factura_servicio)=>{ %>
-            <tr>
-                <td><%= factura_servicio.id %></td>
-                <td><%= factura_servicio.fecha %></td>
-                <td><%= factura_servicio.hora %></td>
-                <td><%= factura_servicio.servicio %></td>
-                <td><%= factura_servicio.nombre_cliente %></td>
-                <td><%= factura_servicio.valor_factura %></td>
-                <td><%= factura_servicio.nombre_vendedor %></td>
-                <td><%= factura_servicio.sede %></td>
-                
-                <td>
-                    <a href="/factServiEdit/<%= factura_servicio.id %>" class="btn btn-outline-barb-color2 "><i class="fa-solid fa-file-pen"></i></a>
-                    <a href="/deleteFactServ/<%= factura_servicio.id %>" class="btn btn-outline-danger"><i class="fa-solid fa-trash-can"></i></a>
+</body>
 
-                </td>
-                <td>
-                  <a href="/factServImpr/<%= factura_servicio.id %>" class="btn btn-outline-barb-color2 "><i class="fa-solid fa-file-pdf"></i></a>
-              </td>
-            </tr>
-        <% }) %>
-
-        </tbody>
-    </table>
-
-
-  </div>
 
 
 

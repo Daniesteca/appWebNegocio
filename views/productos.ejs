@@ -1,41 +1,116 @@
-<title>Administracion de Productos</title>
-<div class ="container">
-    <h1 class="text-center"> Administracion de Productos </h1>
-    <!--boton de crear -->
-    <a href="/productosCreate" class="btn btn-outline-barb-color2 mt-4"><i class='bx bxs-plus-circle bx-md'></i></a>
-    <!--tabla -->
-    <table class="table table-bordered table-striped text-center mt-4">
-        <thead class="table-dark"> <!--color encabezado de la  tabla -->
-            <tr >
-                <th scope="col">id</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Cantidad</th>
-                <th scope="col">Valor</th>
-                <!-- <th scope="col">Id_usuario</th> -->
-                <!--botones -->
-                <th scope="col">Acciones</th>
-            </tr>
-        </thead>
+<head>
+    <link rel="stylesheet" href="../public/isadmin.css">
+    <title>Administracion de Productos</title>
+</head>
 
-        <tbody>
-            <% results.forEach((productos)=>{ %>
-            <tr>
-                <td><%= productos.id %></td>
-                <td><%= productos.nombre %></td>
-                <td><%= productos.cantidad %></td>
-                <td><%= productos.valor %></td>
-                <!-- <td><%= productos.id_usuario %></td> -->
-                
-                
-                <!--botones -->
-                <td>
-                    <a href="/productosEdit/<%= productos.id %>" class="btn btn-outline-barb-color2 ">editar</a>
-                    <a href="/deleteProducto/<%= productos.id %>" class="btn btn-outline-danger">borrar</a>
+<body>
 
-                </td>
-            </tr>
-        <% }) %>
 
-        </tbody>
-    </table>
-  </div>
+
+        <% if (rol =='administrador') { %>
+        <div class="container2">
+            <!-- sidebar -->
+            <aside class="sidebar">
+              <nav class="  nav flex-column navbar-nav me-auto mb-2 mb-lg-0">
+                <a class="nav-link "  href="/usuarios">Usuarios</a>
+                <a class="nav-link " href="/clientes">Clientes</a>
+                <a class="nav-link " href="/factProd">Factura producto</a>
+                <a class="nav-link " href="/factServi">Factura servicio</a>
+              </nav>
+            </aside>
+
+            <div class ="container">
+                <h1 class="text-center"> Administracion de Productos </h1>
+                <!--boton de crear -->
+                <a href="/productosCreate" class="btn btn-outline-barb-color2 mt-4"><i class='bx bxs-plus-circle bx-md'></i></a>
+                <!--tabla -->
+                <table class="table table-bordered table-striped text-center mt-4">
+                    <thead class="table-dark"> <!--color encabezado de la  tabla -->
+                        <tr >
+                            <th scope="col">id</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Valor</th>
+                            <!-- <th scope="col">Id_usuario</th> -->
+                            <!--botones -->
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+            
+                    <tbody>
+                        <% results.forEach((productos)=>{ %>
+                        <tr>
+                            <td><%= productos.id %></td>
+                            <td><%= productos.nombre %></td>
+                            <td><%= productos.cantidad %></td>
+                            <td><%= productos.valor %></td>
+                            <!-- <td><%= productos.id_usuario %></td> -->
+                            
+                            
+                            <!--botones -->
+                            <td>
+                                <a href="/productosEdit/<%= productos.id %>" class="btn btn-outline-barb-color2 ">editar</a>
+                                <a href="/deleteProducto/<%= productos.id %>" class="btn btn-outline-danger">borrar</a>
+            
+                            </td>
+                        </tr>
+                    <% }) %>
+            
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+            
+          <% } %>
+
+          <% if (rol =='barbero') { %>
+
+            <div class ="container">
+                <h1 class="text-center"> Administracion de Productos </h1>
+                <!--boton de crear -->
+                <a href="/productosCreate" class="btn btn-outline-barb-color2 mt-4"><i class='bx bxs-plus-circle bx-md'></i></a>
+                <!--tabla -->
+                <table class="table table-bordered table-striped text-center mt-4">
+                    <thead class="table-dark"> <!--color encabezado de la  tabla -->
+                        <tr >
+                            <th scope="col">id</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Valor</th>
+                            <!-- <th scope="col">Id_usuario</th> -->
+                            <!--botones -->
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+            
+                    <tbody>
+                        <% results.forEach((productos)=>{ %>
+                        <tr>
+                            <td><%= productos.id %></td>
+                            <td><%= productos.nombre %></td>
+                            <td><%= productos.cantidad %></td>
+                            <td><%= productos.valor %></td>
+                            <!-- <td><%= productos.id_usuario %></td> -->
+                            
+                            
+                            <!--botones -->
+                            <td>
+                                <a href="/productosEdit/<%= productos.id %>" class="btn btn-outline-barb-color2 ">editar</a>
+                                <a href="/deleteProducto/<%= productos.id %>" class="btn btn-outline-danger">borrar</a>
+            
+                            </td>
+                        </tr>
+                    <% }) %>
+            
+                    </tbody>
+                </table>
+            </div>
+
+          <% } %>
+    
+
+    
+
+</body>
+

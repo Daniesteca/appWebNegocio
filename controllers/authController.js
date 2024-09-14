@@ -26,7 +26,7 @@ exports.register = async (req, res)=>{
 
 // metodo para loguearse
 exports.login = async (req, res)=>{
-    try{
+    try{//- captura los datos y comprueba que existan en la bd y sean iguales
         const usuario = req.body.usuario
         const password = req.body.password
         // si los campos estan vacios
@@ -108,7 +108,7 @@ exports.isAutenticated = async(req, res, next)=>{
             return next()
         }
     }else{
-        res.redirect('/login')
+        res.redirect('/login')//si no esta autenticando se envia al login
         
     }
 }
@@ -120,3 +120,25 @@ exports.logout = (req, res)=>{
     return res.redirect('/login')
 }
 
+
+exports.checkRole = async (req, res, next) => {
+    try {
+        const decodificada = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRETO);
+        conexion.query('SELECT rol FROM usuarios WHERE id = ?', [decodificada.id], (error, results) => {
+            if (error) {
+                console.error('Error al consultar el rol del usuario:', error);
+                return res.status(500).send('Error en el servidor');
+            }
+
+            if (results.length > 0) {
+                req.rol = results[0].rol;
+                next();
+            } else {
+                res.redirect('/home');
+            }
+        });
+    } catch (error) {
+        console.error('Error de autenticación:', error);
+        return res.redirect('/login');
+    }
+};

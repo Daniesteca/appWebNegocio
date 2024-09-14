@@ -16,7 +16,9 @@ const {vistaIndex, vistaLogin, vistaPrincipal,vistaVentas,vCreateVenta,veditVent
 // ROUTER.GET PARA LAS VISTAS ---------------------------------------|
 
 //RUTA MENU PRINCIPAL PARA USUARIOS AUTENTICADOS-----------|
-router.get('/home', authController.isAutenticated, vistaPrincipal)
+// router.get('/home', authController.isAutenticated,authController.isAdmin, authController.isBarber, vistaPrincipal)
+// RUTA MENU PRINCIPAL PARA USUARIOS AUTENTICADOS
+router.get('/home', authController.isAutenticated, authController.checkRole, vistaPrincipal);
 
 //***************** */ RUTA PRIMERA PAGINA QUE CARGA---______________**********************************|
 router.get('/', vistaIndex)
@@ -27,43 +29,43 @@ router.get('/login', vistaLogin)
 
 
 //RUTA VENTAS----------------------------------------|
-router.get('/ventas',authController.isAutenticated,vistaVentas),
+router.get('/ventas',authController.isAutenticated,authController.checkRole,vistaVentas)
 router.get('/ventasCreate',authController.isAutenticated,vCreateVenta)
 router.get('/ventasEdit/:id',authController.isAutenticated, veditVenta)    
-router.get('/carritoVenta',authController.isAutenticated,vistaCarrito)
+router.get('/carritoVenta',authController.isAutenticated,authController.checkRole,vistaCarrito)
 router.get('/ventFactImpr/:id',authController.isAutenticated,ventaImprimirFact)
 //RUTA USUARIOS----------------|
-router.get('/usuarios',authController.isAutenticated,vistaUsuarios)
-router.get('/usuariosCreate',authController.isAutenticated, vCreateUsuario)
-router.get('/usuariosEdit/:id',authController.isAutenticated, veditUsuario)
+router.get('/usuarios',authController.isAutenticated,authController.checkRole,vistaUsuarios)//------probando permiso
+router.get('/usuariosCreate',authController.isAutenticated,authController.checkRole, vCreateUsuario)
+router.get('/usuariosEdit/:id',authController.isAutenticated,authController.checkRole, veditUsuario)
 
 //RUTA CLIENTES----------------|
-router.get('/clientes',authController.isAutenticated, vistaClientes)
-router.get('/clientesCreate',authController.isAutenticated, vCreateClient)
-router.get('/clientesEdit/:id',authController.isAutenticated, veditClient)
+router.get('/clientes',authController.isAutenticated,authController.checkRole, vistaClientes)
+router.get('/clientesCreate',authController.isAutenticated,authController.checkRole, vCreateClient)
+router.get('/clientesEdit/:id',authController.isAutenticated,authController.checkRole, veditClient)
 
 //RUTA PRODUCTOS---------------|
-router.get('/productos',authController.isAutenticated, vistaProd)
+router.get('/productos',authController.isAutenticated,authController.checkRole, vistaProd)
 router.get('/productosCreate',authController.isAutenticated, vCreateProduct)
 router.get('/productosEdit/:id',authController.isAutenticated, veditProd)
 
 //RUTA CITAS------------------|
-router.get('/citas',authController.isAutenticated,vistaCitas)
+router.get('/citas',authController.isAutenticated,authController.checkRole,vistaCitas)
 router.get('/citasCreate',authController.isAutenticated, vCreateCita)
 router.get('/citasEdit/:id',authController.isAutenticated,vEditCita)
 
 //RUTA FACTURA PRODUCTO-------|____________________________________________________________________________
-router.get('/factProd',authController.isAutenticated, vistaFactProd)
-router.get('/factProdCreate',authController.isAutenticated,vCreateFactProd)
-router.get('/factProdEdit/:id',authController.isAutenticated,vEditFactProd)
-router.get('/factProdImpr/:id',authController.isAutenticated,vImprimirFactProd) //___________________PDF PDF----------PDF-----|
+router.get('/factProd',authController.isAutenticated,authController.checkRole, vistaFactProd)
+router.get('/factProdCreate',authController.isAutenticated,authController.checkRole,vCreateFactProd)
+router.get('/factProdEdit/:id',authController.isAutenticated,authController.checkRole,vEditFactProd)
+router.get('/factProdImpr/:id',authController.isAutenticated,authController.checkRole,vImprimirFactProd) //___________________PDF PDF----------PDF-----|
 
 
-//RUTA FACTURA PRODUCTO------|
-router.get('/factServi',authController.isAutenticated,vistaFactServ)
-router.get('/factServiCreate',authController.isAutenticated,vCreateFactServ)
-router.get('/generar-factura/:id',authController.isAutenticated,vEditFactServi) 
-router.get('/factServImpr/:id',authController.isAutenticated,vImprimirFactServ) //___________________PDF PDF----------PDF-----|
+//RUTA FACTURA SERVICIO------|
+router.get('/factServi',authController.isAutenticated,authController.checkRole,vistaFactServ)
+router.get('/factServiCreate',authController.isAutenticated,authController.checkRole,vCreateFactServ)
+router.get('/generar-factura/:id',authController.isAutenticated,authController.checkRole,vEditFactServi) 
+router.get('/factServImpr/:id',authController.isAutenticated,authController.checkRole,vImprimirFactServ) //___________________PDF PDF----------PDF-----|
 
 // ROUTER.POST PARA LOS METODOS  --------------------------------------------|
 
@@ -100,7 +102,7 @@ router.post('/updateFactServ', crud.updateFactServ);
 ///RUTAS PARA ELIMINAR DATOS------------------------------------------------------------------------------|
 
 //ELIMINAR VENTAS 
-router.get('/deleteVentas/:id',(req, res )=>{
+router.get('/deleteVentas/:id',authController.checkRole,(req, res )=>{
     const id = req.params.id;
     conexion.query('DELETE FROM ventas WHERE id = ?', [id], (error,results)=>{
         if(error){
@@ -116,7 +118,7 @@ router.get('/deleteVentas/:id',(req, res )=>{
 
 
 //ELIMINAR USUARIOS  
-router.get('/deleteUsuario/:id',(req, res )=>{
+router.get('/deleteUsuario/:id',authController.checkRole,(req, res )=>{
     const id = req.params.id;
     conexion.query('DELETE FROM usuarios WHERE id = ?', [id], (error,results)=>{
         if(error){
@@ -129,7 +131,7 @@ router.get('/deleteUsuario/:id',(req, res )=>{
 });
 
 //ELIMINAR CLIENTE 
-router.get('/deleteCliente/:id',(req, res )=>{
+router.get('/deleteCliente/:id',authController.checkRole,(req, res )=>{
     const id = req.params.id;
     conexion.query('DELETE FROM cliente WHERE id = ?', [id], (error,results)=>{
         if(error){
@@ -169,7 +171,7 @@ router.get('/deleteCita/:id',(req, res )=>{
 });
 
 //ELIMINAR FACTURA PRODUCTO
-router.get('/deleteFactProd/:id',(req, res )=>{
+router.get('/deleteFactProd/:id',authController.checkRole,(req, res )=>{
     const id = req.params.id;
     conexion.query('DELETE FROM factura_producto WHERE id = ?', [id], (error,results)=>{
         if(error){
@@ -182,7 +184,7 @@ router.get('/deleteFactProd/:id',(req, res )=>{
 });
 
 //ELIMINAR FACTURA SERVICIO
-router.get('/deleteFactServ/:id',(req, res )=>{
+router.get('/deleteFactServ/:id',authController.checkRole,(req, res )=>{
     const id = req.params.id;
     conexion.query('DELETE FROM factura_servicio WHERE id = ?', [id], (error,results)=>{
         if(error){

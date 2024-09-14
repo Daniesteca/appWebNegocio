@@ -4,89 +4,151 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-
-    <style>
-      .carousel-inner img{
-        width: 80%;
-        height: auto;
-      }
-  
-      .contenedor-carrusel {
-        width: 850px;  /* Ajusta el ancho a tu preferencia */
-        max-width: 100%;  /* Permite que se ajuste en pantallas pequeñas */
-        margin: 0 auto;  /* Centra el carrusel horizontalmente */
-      }
-
-    </style>
+    <link rel="stylesheet" href="../public/isadmin.css">
 </head>
 <body>
+
+ 
+
+    <% if (rol =='administrador') { %>
+      <div class="container2">
+        <!-- sidebar -->
+        <aside class="sidebar">
+          <nav class="  nav flex-column navbar-nav me-auto mb-2 mb-lg-0">
+            <a class="nav-link "  href="/usuarios">Usuarios</a>
+            <a class="nav-link " href="/clientes">Clientes</a>
+            <a class="nav-link " href="/factProd">Factura producto</a>
+            <a class="nav-link " href="/factServi">Factura servicio</a>
+          </nav>
+        </aside>
+
         <!-- contenido principal -->
         <main class="col-md-11 ms-sm-auto" >
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-              <h2>Dashboard</h2> 
-              <h2> Bienvenido:
-                <% if (usuario) {%>
-                  <span class="badge bg-dark"><%= usuario.nombre %></span>
-                <% } %>  
-              </h2>
-            </div>
-
-            <!-- carrucel -->
-
-            <section class="contenedor-carrusel">
-
-              <section>
-                <div id="carouselExampleDark" class="carousel carousel-dark slide"  data-bs-ride="carousel" >
-                  <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                  </div>
-                  <div class="carousel-inner">
-                    <div class="carousel-item active" data-bs-interval="5000">
-                      <img src="img/1.png" class="d-block w-100" alt="Citas">
-                      <div class="carousel-caption d-none d-md-block">
-                        <h5>Citas</h5>
-                        <p>lleva el control de las citas con tus clientes desde un solo lugar.</p>
-                      </div>
-                    </div>
-                    <div class="carousel-item" data-bs-interval="5000">
-                      <img src="img/2.png" class="d-block w-100" alt="Productos">
-                      <div class="carousel-caption d-none d-md-block">
-                        <h5>Productos</h5>
-                        <p>Manten actualizado el stock de los productos de la tienda.</p>
-                      </div>
-                    </div>
-                    <div class="carousel-item">
-                      <img src="img/3.png" class="d-block w-100" alt="Facturas">
-                      <div class="carousel-caption d-none d-md-block">
-                        <h5>Facturación</h5>
-                        <p>Factura tanto los servicios como los productos que vendes, y consultalos cada que lo necesites.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                  </button>
-                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                  </button>
+          <!-- usuario logado -->
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h2>Dashboard</h2> 
+            <h2> Bienvenido:
+              <% if (usuario) {%>
+                <span class="badge fw-lighter bg-dark"><%= usuario.nombre %></span>
+              <% } %>  
+            </h2>
+          </div>
+          <!-- carrucel -->
+          <section class="contenedor-carrusel">
+            <section>
+              <div id="carouselExampleDark" class="carousel carousel-dark slide"  data-bs-ride="carousel" >
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
                 </div>
-              </section>
-
-
+                <div class="carousel-inner">
+                  <div class="carousel-item active" data-bs-interval="5000">
+                    <img src="img/1.png" class="d-block w-100" alt="Citas">
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5>Citas</h5>
+                      <p>lleva el control de las citas con tus clientes desde un solo lugar.</p>
+                    </div>
+                  </div>
+                  <div class="carousel-item" data-bs-interval="5000">
+                    <img src="img/2.png" class="d-block w-100" alt="Productos">
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5>Productos</h5>
+                      <p>Manten actualizado el stock de los productos de la tienda.</p>
+                    </div>
+                  </div>
+                  <div class="carousel-item">
+                    <img src="img/3.png" class="d-block w-100" alt="Facturas">
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5>Facturación</h5>
+                      <p>Factura tanto los servicios como los productos que vendes, y consultalos cada que lo necesites.</p>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
             </section>
+          </section>
+        </main>
+      </div>
+      <% } %>
 
 
-          </main>
-          <br>
-          <section class="border-bottom col-md-9 ms-sm-auto col-lg-10 px-md-4"></section>
-          <br>
-          <footer>
-            <p class="text-center">&copy; Daniela Castaño | Ficha: 2675814</p>
-          </footer>      
+
+<!-- vista para barberos -->
+      <% if (rol =='barbero') { %>
+        <!-- contenido principal -->
+        <main class="col-md-11 ms-sm-auto" >
+        <!-- usuario logado -->
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h2>Dashboard</h2> 
+          <h2> Bienvenido:
+            <% if (usuario) {%>
+              <span class="badge fw-lighter bg-dark"><%= usuario.nombre %></span>
+            <% } %>  
+          </h2>
+        </div>
+        <!-- carrucel -->
+        <section class="contenedor-carrusel">
+          <section>
+            <div id="carouselExampleDark" class="carousel carousel-dark slide"  data-bs-ride="carousel" >
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              </div>
+              <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="5000">
+                  <img src="img/1.png" class="d-block w-100" alt="Citas">
+                  <div class="carousel-caption d-none d-md-block">
+                    <h5>Citas</h5>
+                    <p>lleva el control de las citas con tus clientes desde un solo lugar.</p>
+                  </div>
+                </div>
+                <div class="carousel-item" data-bs-interval="5000">
+                  <img src="img/2.png" class="d-block w-100" alt="Productos">
+                  <div class="carousel-caption d-none d-md-block">
+                    <h5>Productos</h5>
+                    <p>Manten actualizado el stock de los productos de la tienda.</p>
+                  </div>
+                </div>
+                <div class="carousel-item">
+                  <img src="img/3.png" class="d-block w-100" alt="Facturas">
+                  <div class="carousel-caption d-none d-md-block">
+                    <h5>Facturación</h5>
+                    <p>Factura tanto los servicios como los productos que vendes, y consultalos cada que lo necesites.</p>
+                  </div>
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </section>
+        </section>
+      </main>
+      <% } %>
+
+  
+
+<br>
+<section class="border-bottom col-md-9 ms-sm-auto col-lg-10 px-md-4"></section>
+<br>
+<footer>
+  <p class="text-center">&copy; Leñador barber shop</p>
+</footer>      
 
     
 </body>

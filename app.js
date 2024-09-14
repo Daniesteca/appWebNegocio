@@ -20,6 +20,7 @@ app.use(express.json());
 
 app.use(expressLayouts);
 
+
 //para leer el  index.html
 // app.use(express.static(path.join(__dirname, 'views')));
 app.use(express.static(__dirname, { root: './' }));

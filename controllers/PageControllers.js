@@ -2,26 +2,26 @@ const express = require('express');
 const router = express.Router();
 
 const conexion = require('../database/db');
+const { isAdmin } = require('./authController');
 //PRIMERA PAGINA QUE CARGA INDEX----------------------------------------****|
 const vistaIndex = (req, res)=>{
     res.render('index.html',{layout:false,alert:false})
 }
-
-// PAGINA PRINCIPAL O HOME-----------------------------------------------|
-const vistaPrincipal =  (req, res)=>{
-    res.render('home',{layout:true, usuario:req.usuario})
-}
-
 
 // PAGINA PARA INICIO SESION-----------------------------------------------|
 const vistaLogin = (req, res)=>{
     res.render('login',{layout:false,alert:false})
 }
 
+// PAGINA PRINCIPAL O HOME-----------------------------------------------|
+const vistaPrincipal =  (req, res)=>{
+    res.render('home',{layout:true, usuario:req.usuario , rol:req.rol})
+}
+
 //PAGINA DE CARRITO--------------------------------------------------------------------------------------------------|
 
 const vistaCarrito = (req, res)=>{
-    res.render('carritoVenta',{layout:true,usuario:req.usuario,alert:false})
+    res.render('carritoVenta',{layout:true,usuario:req.usuario,alert:false, rol:req.rol})
 }
 
 //PPAGINA DE VENTAS----------------------------------------------------------------------------------------------|
@@ -32,7 +32,7 @@ const vistaVentas = (req, res)=>{
         if(error){
             throw error;
         }else{
-            res.render('ventas', { layout: true, results:results});
+            res.render('ventas', { layout: true, results:results,rol:req.rol});
         }
     }) 
 }
@@ -78,7 +78,7 @@ const vistaUsuarios = (req, res)=>{
             if(error){
                 throw error;
             }else{
-                res.render('usuarios', { layout: true, results:results});
+                res.render('usuarios', { layout: true, results:results, rol:req.rol});
             }
         }) 
 }
@@ -107,7 +107,7 @@ const vistaClientes= (req, res)=>{
             if(error){
                 throw error;
             }else{
-                res.render('clientes', { layout: true, results:results});
+                res.render('clientes', { layout: true, results:results, rol:req.rol});
             }
         }) 
     }
@@ -138,7 +138,7 @@ const  vistaProd = (req, res)=>{
         if(error){
             throw error;
         }else{
-            res.render('productos', { layout: true, results:results});
+            res.render('productos', { layout: true, results:results ,rol:req.rol});
         }
     }) 
 
@@ -168,7 +168,7 @@ const vistaCitas = (req, res)=>{
         if(error){
             throw error;
         }else{
-            res.render('citas', { layout: true, results:results});
+            res.render('citas', { layout: true, results:results,rol:req.rol});
         }
     }) 
 
@@ -200,7 +200,7 @@ const vistaFactProd = (req, res)=>{
         if(error){
             throw error;
         }else{
-            res.render('factProd', { layout: true, results:results});
+            res.render('factProd', { layout: true, results:results, rol:req.rol});
         }
     }) 
 
@@ -250,7 +250,7 @@ const vistaFactServ = (req, res)=>{
         if(error){
             throw error;
         }else{
-            res.render('factServi', { layout: true, results:results});
+            res.render('factServi', { layout: true, results:results, rol:req.rol});
         }
     }) 
 
