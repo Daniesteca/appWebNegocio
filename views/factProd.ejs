@@ -64,13 +64,14 @@
               <thead class="table-dark"> <!--color encabezado de la  tabla -->
                   <tr >
                       <th scope="col">Id</th>
-                      <th  scope="col">Fecha</th>
-                      <th scope="col">Hora</th>
-                      <th scope="col">Producto</th>
+                      <th  scope="col">Fecha y hora</th>
+                      <th scope="col">Id venta</th>
                       <th scope="col">Nombre_cliente</th>
-                      <th scope="col">Valor factura</th>
+                      <th scope="col">Producto</th>
+                      <!-- <th scope="col">id Vendedor</th> -->
                       <th scope="col">Vendedor</th>
                       <th scope="col">Sede</th>
+                      <th scope="col">Valor factura</th>
                       <th scope="col">Editar/Borrar</th>
                       <th scope="col">Imprimir</th>
                   </tr>
@@ -80,13 +81,15 @@
                   <% results.forEach((factura_producto)=>{ %>
                   <tr>
                       <td><%= factura_producto.id %></td>
-                      <td><%= factura_producto.fecha %></td>
-                      <td><%= factura_producto.hora %></td>
-                      <td><%= factura_producto.producto %></td>
+                      <td><%= factura_producto.fecha_hora %></td>
+                      <td><%= factura_producto.id_venta %></td>
                       <td><%= factura_producto.nombre_cliente %></td>
-                      <td><%= factura_producto.valor_factura %></td>
+                      <td><%= factura_producto.producto %></td>
+                      <!-- <td><%= factura_producto.id_vendedor %></td> -->
                       <td><%= factura_producto.nombre_vendedor %></td>
                       <td><%= factura_producto.sede %></td>
+                      <td><%= factura_producto.valor_factura %></td>
+                      
                       <!-- accioness -->
                       <td>
                           <a href="/factProdEdit/<%= factura_producto.id %>" class="btn btn-outline-barb-color2 "><i class="fa-solid fa-file-pen"></i></a>

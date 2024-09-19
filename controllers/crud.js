@@ -1,10 +1,17 @@
+const bcryptjs = require('bcryptjs')
+
 const conexion = require('../database/db');
 //CONTROLES DE VENTAS------------------------------------------------|
 //GUARDAR LOS DATOS
 exports.saveVenta=(req,res)=>{
+    const id_venta= req.body.id_venta;
     const nombre_cliente = req.body.nombre_cliente;
     const tipo_venta = req.body.tipo_venta;
     const descripcion = req.body.descripcion;
+    const producto = req.body.producto;
+    const productoValor = req.body.productoValor;
+    const servicio = req.body.servicio;
+    const servicioValor = req.body.servicioValor;
     const valor = req.body.valor;
     const descuentos = req.body.descuentos;
     const id_vendedor= req.body.id_vendedor;
@@ -12,14 +19,18 @@ exports.saveVenta=(req,res)=>{
     const sede = req.body.sede;
     const valor_total = req.body.valor_total;
 
-    conexion.query('INSERT INTO ventas SET ?',{nombre_cliente:nombre_cliente,tipo_venta:tipo_venta,descripcion:descripcion,valor:valor,descuentos:descuentos,id_vendedor:id_vendedor,vendedor:vendedor,sede:sede,valor_total:valor_total},(error,results)=>{
+    conexion.query('INSERT INTO ventas SET ?',{id_venta:id_venta,nombre_cliente:nombre_cliente,tipo_venta:tipo_venta,descripcion:descripcion,producto:producto,productoValor:productoValor,servicio:servicio,servicioValor:servicioValor,valor:valor,descuentos:descuentos,id_vendedor:id_vendedor,vendedor:vendedor,sede:sede,valor_total:valor_total},(error,results)=>{
         if(error){0
             console.log(error);
         } else{
             console.log(results);
             res.redirect('ventas');
+            
         }
     })
+    conexion.query('CALL insertar_ultimo_registro_en_factura_producto()');
+    conexion.query('CALL insertar_ultimo_registro_en_factura_servicio()');
+    conexion.query('CALL descomponer_descripcion()');
 };
 
 ///ACTUALIZAR LOS DATOS
@@ -88,8 +99,8 @@ exports.updateUsuario = (req, res)=>{
 
 
 //CONTROLES DE CLIENTES------------------------------------------------|
-//GUARDAR LOS DATOS
-exports.saveCliente=(req,res)=>{
+//GUARDAR LOS DATOS---ya no bycript
+exports.saveCliente =  (req,res)=>{
     const nombre = req.body.nombre;
     const email = req.body.email;
     const usuario = req.body.usuario;

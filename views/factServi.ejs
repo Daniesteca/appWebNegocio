@@ -67,13 +67,14 @@
               <thead class="table-dark"> <!--color encabezado de la  tabla -->
                   <tr >
                       <th scope="col">Id</th>
-                      <th  scope="col">Fecha</th>
-                      <th scope="col">Hora</th>
-                      <th scope="col">Servicio</th>
+                      <th  scope="col">Fecha y hora</th>
+                      <th scope="col">Id venta</th>
                       <th scope="col">Nombre_cliente</th>
-                      <th scope="col">Valor factura</th>
+                      <th scope="col">Servicio</th>
+                      <!-- <th scope="col">id Vendedor</th> -->
                       <th scope="col">Vendedor</th>
                       <th scope="col">Sede</th>
+                      <th scope="col">Valor factura</th>
                       <th scope="col">Editar/Borrar</th>
                       <th scope="col">Imprimir</th>
                   </tr>
@@ -83,13 +84,14 @@
                   <% results.forEach((factura_servicio)=>{ %>
                   <tr>
                       <td><%= factura_servicio.id %></td>
-                      <td><%= factura_servicio.fecha %></td>
-                      <td><%= factura_servicio.hora %></td>
-                      <td><%= factura_servicio.servicio %></td>
+                      <td><%= factura_servicio.fecha_hora %></td>
+                      <td><%= factura_servicio.id_venta %></td>
                       <td><%= factura_servicio.nombre_cliente %></td>
-                      <td><%= factura_servicio.valor_factura %></td>
+                      <td><%= factura_servicio.servicio %></td>
+                      <!-- <td><%= factura_servicio.id_vendedor %></td> -->
                       <td><%= factura_servicio.nombre_vendedor %></td>
                       <td><%= factura_servicio.sede %></td>
+                      <td><%= factura_servicio.valor_factura %></td>
                       
                       <td>
                           <a href="/factServiEdit/<%= factura_servicio.id %>" class="btn btn-outline-barb-color2 "><i class="fa-solid fa-file-pen"></i></a>

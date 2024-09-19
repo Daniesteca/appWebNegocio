@@ -26,7 +26,7 @@
             <div class ="container">
 
 
-                <!-- <h1>Carrito de compras</h1> -->
+                <!-- <h1>Usuario Carrito de compras</h1> -->
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h2>Carrito de compras</h2> 
                     <h2> Bienvenido:
@@ -36,7 +36,7 @@
                     </h2>
                 </div>
 
-
+                <!-- carrito de compras -->
                 <section id="contenedor" class=" contenedor">
                     <!-- Contenedor de productos -->
                     <div id="contenedor-items">
@@ -192,6 +192,12 @@
                             <form action="/saveVenta" method="POST"> 
 
                                 <div class="mb-3">
+                                    <label for="user" class="form-label" >ID Factura:</label>
+                                    <label for="usuario" class="form-label"></label>
+                                    <input type="text" class="form-control" id="id_venta" name="id_venta"  tabindex="1">
+                                </div>
+
+                                <div class="mb-3">
                                     <label for="user" class="form-label" >Nombre Cliente</label>
                                     <label for="usuario" class="form-label"></label>
                                     <input type="text" class="form-control" id="nombre_cliente" name="nombre_cliente"  tabindex="1">
@@ -206,6 +212,24 @@
                                 <div class="mb-3">
                                     <label for="user" class="form-label" hidden>Descripcion: </label> <br>
                                     <input type="text" class="descripcion-items" id="descripcion" name="descripcion"  tabindex="1" hidden>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="user" class="form-label" hidden>Productos: </label> <br>
+                                    <input type="text" class="producto-items" id="producto" name="producto"  tabindex="1" hidden >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="user" class="form-label" hidden >Productos Precio: </label> <br>
+                                    <input type="text" class="producto-items-price" id="productoValor" name="productoValor"  tabindex="1" hidden >
+                                </div>
+
+
+                                <div class="mb-3">
+                                    <label for="user" class="form-label" hidden>Servicios: </label> <br>
+                                    <input type="text" class="servicio-items" id="servicio" name="servicio"  tabindex="1" hidden >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="user" class="form-label" hidden>Servicios precio: </label> <br>
+                                    <input type="text" class="servicio-items-price" id="servicioValor" name="servicioValor"  tabindex="1" hidden>
                                 </div>
 
                                 <div class="mb-3">

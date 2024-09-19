@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+
 //conectamos al crud
 const crud = require('../controllers/crud');
 
@@ -8,6 +9,7 @@ const conexion = require('../database/db');
 
 //conectamos a authController( autenticacion de usuario)
 const authController = require('../controllers/authController');
+
 
 //CONEXION A LAS VISTAS CONSTANTES
 const {vistaIndex, vistaLogin, vistaPrincipal,vistaVentas,vCreateVenta,veditVenta,vistaCarrito, vistaUsuarios,vCreateUsuario,veditUsuario,vistaClientes,vCreateClient,veditClient,vistaProd,vCreateProduct,veditProd,vistaCitas,vCreateCita,vEditCita,vistaFactProd,vCreateFactProd,vEditFactProd,vImprimirFactProd,vistaFactServ,vCreateFactServ,vEditFactServi,vImprimirFactServ,ventaImprimirFact} = require('../controllers/PageControllers')
@@ -71,6 +73,7 @@ router.get('/factServImpr/:id',authController.isAutenticated,authController.chec
 
 //METODOS PARA AUTENTICACION DE USUARIOS------|
 router.post('/register',authController.register)
+router.post('/registerClient',authController.registerClient)
 router.post('/login',authController.login)
 router.get('/logout',authController.logout)//REDIRECCIONA AL LOGIN
 
@@ -82,6 +85,7 @@ router.post('/updateVenta', crud.updateVenta);
 //usuarios
 router.post('/saveUsuario',crud.saveUsuario);// ya no se usa
 router.post('/register',authController.register)//autenticacion de registro deusuario
+router.post('/registerClient',authController.registerClient)//autenticacion de registro deusuario
 router.post('/updateUsuario', crud.updateUsuario);
 //clientes
 router.post('/saveCliente',crud.saveCliente);

@@ -196,7 +196,7 @@ const vEditCita =  (req, res)=>{
 //principal 
 const vistaFactProd = (req, res)=>{
 
-    conexion.query('SELECT id,DATE_FORMAT(fecha,"%d/%m/%Y") AS fecha,TIME_FORMAT(hora,"%H:%i") as hora,producto,nombre_cliente,CONCAT("$ ", FORMAT(valor_factura, 0)) AS valor_factura,nombre_vendedor,sede FROM factura_producto',(error, results)=>{
+    conexion.query('SELECT id, CONCAT(DATE_FORMAT(fecha_hora, "%d/%m/%Y")," - ",TIME_FORMAT(fecha_hora, "%H:%i")) AS fecha_hora,id_venta,nombre_cliente, producto,nombre_vendedor,sede,CONCAT("$ ", FORMAT(valor_factura, 0)) AS valor_factura FROM factura_producto',(error, results)=>{
         if(error){
             throw error;
         }else{
@@ -246,7 +246,8 @@ const vImprimirFactProd = (req, res)=>{
 //principal 
 const vistaFactServ = (req, res)=>{
 
-    conexion.query('SELECT id,DATE_FORMAT(fecha,"%d/%m/%Y") AS fecha,TIME_FORMAT(hora,"%H:%i") as hora,servicio,nombre_cliente,CONCAT("$ ", FORMAT(valor_factura, 0)) AS valor_factura,nombre_vendedor,sede FROM factura_servicio',(error, results)=>{
+
+    conexion.query('SELECT id, CONCAT(DATE_FORMAT(fecha_hora, "%d/%m/%Y")," - ",TIME_FORMAT(fecha_hora, "%H:%i")) AS fecha_hora,id_venta,nombre_cliente, servicio,nombre_vendedor,sede,CONCAT("$ ", FORMAT(valor_factura, 0)) AS valor_factura FROM factura_servicio',(error, results)=>{
         if(error){
             throw error;
         }else{

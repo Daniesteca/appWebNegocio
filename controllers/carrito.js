@@ -96,6 +96,9 @@ function hacerVisibleCarrito(){
     items.style.width = '60%';
 }
 
+
+
+
 //Funciòn que agrega un item al carrito_______________________________________________crea el producto en el carrito_________|
 function agregarItemAlCarrito(titulo,tventa, precio, imagenSrc){
     var item = document.createElement('div');
@@ -143,6 +146,9 @@ function agregarItemAlCarrito(titulo,tventa, precio, imagenSrc){
     //Agregamos la funcionalidad sumar cantidad del nuevo item
     var botonSumarCantidad = item.getElementsByClassName('sumar-cantidad')[0];
     botonSumarCantidad.addEventListener('click',sumarCantidad);
+
+    //id venta
+    asignarIdVenta();
 
     //actualzar tipo venta
     actualizarTipoVenta();
@@ -239,6 +245,8 @@ function actualizarTotalCarrito(){
     precioNetoElement3.value = total
     console.log( 'este es el value de valor sin formato '+precioNetoElement3.value);
 
+    document.getElementById('producto').value = 0;
+    document.getElementById('servicio').value = 0;
     document.getElementById('descuentos').value = 0;
     document.getElementById('valorTotalF').value = '$' + total.toLocaleString("es") + ",00";
     document.getElementById('valor').value = total;
@@ -246,6 +254,7 @@ function actualizarTotalCarrito(){
     
     //actualizar descripcion
     actualizarDescripcion();
+    actualizarProdyServ();
 }
 
 //funcion apra aplicar descuento
@@ -348,5 +357,70 @@ function actualizarTipoVenta() {
 }
 
 
+//actualiza la cantidad de productos y servicios
+function actualizarProdyServ() {
+    const carritoContenedor = document.getElementById('carrito');
+    const carritoItems = carritoContenedor.getElementsByClassName('carrito-item');
+    const productosInput = document.getElementById('producto');
+    const serviciosInput = document.getElementById('servicio');
+
+    const productosInputPrice = document.getElementById('productoValor');
+    const serviciosInputPrice = document.getElementById('servicioValor');
+
+    let productos = [];
+    let servicios = [];
+
+    let productosValor = [];
+    let serviciosValor = [];
+
+    for (let i = 0; i < carritoItems.length; i++) {
+        const item = carritoItems[i];
+        const tventa = item.querySelector('.carrito-item-tventa').textContent;
+        const titulo = item.querySelector('.carrito-item-titulo').textContent;
+        const cantidad = item.querySelector('.carrito-item-cantidad').value;
+        const precio = parseFloat(item.querySelector('.carrito-item-precio').textContent.replace('$', '').replace('.', ''));
+        const precioFormateado = precio.toLocaleString('es-CO', { minimumFractionDigits: 0 });
+
+        const itemInfo = `${titulo} x ${cantidad} - $${precioFormateado}`;
+        const itemValr = `${precio}`;
+        
+        
+        if (tventa === 'producto') {
+            productos.push(itemInfo);
+            productosValor.push(itemValr);
+        } else if (tventa === 'servicio') {
+            servicios.push(itemInfo);
+            serviciosValor.push(itemValr);
+        }
+    }
+        // ... (resto del código)
+    
+        // Sumar los valores en lugar de concatenarlos
+        const totalProductosValor = productosValor.reduce((total, precio) => total + parseFloat(precio), 0);
+        const totalServiciosValor = serviciosValor.reduce((total, precio) => total + parseFloat(precio), 0);
+    
+        productosInputPrice.value = totalProductosValor;
+        serviciosInputPrice.value = totalServiciosValor;
+    
+        // ... (resto del código)
+    
+
+    productosInput.value = productos
+    serviciosInput.value = servicios
+
+    productosInput.readOnly = true;
+    serviciosInput.readOnly = true;
+    productosInputPrice.readOnly = true;
+    serviciosInputPrice.readOnly = true;
+}
 
 
+function asignarIdVenta(){
+    let num = Date.now();
+    const shortId = `FV-${num}`;
+
+    // Obtener el elemento input por su ID y asignarle el valor
+  const idVentaInput = document.getElementById('id_venta');
+  idVentaInput.value = shortId;
+  idVentaInput.readOnly = true;
+}
